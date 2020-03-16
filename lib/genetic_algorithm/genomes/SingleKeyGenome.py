@@ -1,5 +1,5 @@
 from ga_settings.word_list import word_list
-from random import random, randint, choice
+from random import random, choice
 
 
 class SingleKeyGenome():
