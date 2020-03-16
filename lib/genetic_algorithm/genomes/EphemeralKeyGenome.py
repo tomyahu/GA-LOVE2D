@@ -14,6 +14,13 @@ class EphemeralKeyGenome(SingleKeyGenome):
         SingleKeyGenome.__init__(self, key_input)
         self.frames = frames
 
+    def get_copy(self):
+        """
+        Returns a copy of the current genome
+        :return: <EphemeralKeyGenome> a copy of the current genome
+        """
+        return EphemeralKeyGenome(self.key_input, self.frames)
+
     def get_frames(self):
         """
         getter

@@ -25,6 +25,13 @@ class KeyFrameDurationGenome(KeyFrameGenome):
         input_script.add_input(self.key_input, self.frame, self.frame + self.frame_duration)
         return input_script
 
+    def get_copy(self):
+        """
+        Returns a copy of the current genome
+        :return: <KeyFrameDurationGenome> a copy of the current genome
+        """
+        return KeyFrameDurationGenome(self.key_input, self.frame, self.frame_duration)
+
     def get_duration(self):
         """
         getter

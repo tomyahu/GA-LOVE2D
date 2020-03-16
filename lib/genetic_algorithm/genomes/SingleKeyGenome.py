@@ -32,6 +32,13 @@ class SingleKeyGenome():
         """
         self.key_input = choice(word_list)
 
+    def get_copy(self):
+        """
+        Returns a copy of the current genome
+        :return: <SingleKeyGenome> a copy of the current genome
+        """
+        return SingleKeyGenome(self.key_input)
+
     @staticmethod
     def get_frames():
         """

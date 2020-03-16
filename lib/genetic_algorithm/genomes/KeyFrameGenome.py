@@ -43,6 +43,13 @@ class KeyFrameGenome(SingleKeyGenome):
         input_script.add_input(self.key_input, self.frame, self.frame+1)
         return input_script
 
+    def get_copy(self):
+        """
+        Returns a copy of the current genome
+        :return: <KeyFrameGenome> a copy of the current genome
+        """
+        return KeyFrameGenome(self.key_input, self.frame)
+
     def get_frame(self):
         """
         getter
