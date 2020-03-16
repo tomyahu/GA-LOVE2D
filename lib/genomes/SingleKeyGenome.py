@@ -32,11 +32,15 @@ class SingleKeyGenome():
         """
         self.key_input = word_list[randint(0, len(word_list) - 1)]
 
-    # getter
     @staticmethod
-    def get_frames(self):
+    def get_frames():
+        """
+        getter
+        """
         return 1
 
-    # getter
     def get_key_input(self):
+        """
+        getter
+        """
         return self.key_input
