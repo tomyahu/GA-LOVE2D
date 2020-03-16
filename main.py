@@ -7,7 +7,7 @@ with cd("./love_ga_wrapper"):
     p = Popen([love_path, ".", "run_tas"], stdin=PIPE, stdout=PIPE, stderr=PIPE)
 
     try:
-        out, err = p.communicate(timeout=10)
+        out, err = p.communicate()
     except TimeoutExpired:
         p.kill()
         out, err = p.communicate()
