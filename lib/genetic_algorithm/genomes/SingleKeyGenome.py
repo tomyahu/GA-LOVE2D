@@ -1,5 +1,5 @@
 from ga_settings.word_list import word_list
-from random import random, randint
+from random import random, randint, choice
 
 
 class SingleKeyGenome():
@@ -30,7 +30,7 @@ class SingleKeyGenome():
         """
         Mutates the current genome
         """
-        self.key_input = word_list[randint(0, len(word_list) - 1)]
+        self.key_input = choice(word_list)
 
     @staticmethod
     def get_frames():
