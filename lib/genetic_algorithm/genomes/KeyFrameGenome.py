@@ -37,7 +37,7 @@ class KeyFrameGenome(SingleKeyGenome):
     def get_inputs(self):
         """
         Returns an input script with the data that this genome represents
-        :return: <InputScript>
+        :return: <InputScript> the input script that corresponds to this genome
         """
         input_script = InputScript()
         input_script.add_input(self.key_input, self.frame, self.frame+1)
@@ -46,6 +46,5 @@ class KeyFrameGenome(SingleKeyGenome):
     def get_frame(self):
         """
         getter
-        :return:
         """
         return self.frame
