@@ -1,5 +1,5 @@
 from random import random
-from lib.genomes.SingleKeyGenome import SingleKeyGenome
+from lib.genetic_algorithm.genomes.SingleKeyGenome import SingleKeyGenome
 from lib.input_scripts.InputScript import InputScript
 
 
