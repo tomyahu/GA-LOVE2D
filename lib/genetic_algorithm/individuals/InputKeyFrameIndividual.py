@@ -23,16 +23,16 @@ class InputKeyFrameIndividual(InputIndividual):
         :return: <InputScript> the input script that this individual represents
         """
         inputs = dict()
-        for i in range(1, len(self.genomes) + 1):
-            for frame, key in self.genomes[i].get_inputs():
+        for genome in self.genomes:
+            for frame, key in genome.get_inputs():
                 if not inputs[frame]:
-                    inputs[frame] = dict
+                    inputs[frame] = dict()
 
-                if not inputs[frame + self.genomes[i].get_duration()]:
-                    inputs[frame + self.genomes[i].get_duration()] = {}
+                if not inputs[frame + genome.get_duration()]:
+                    inputs[frame + genome.get_duration()] = {}
 
                 inputs[frame][key] = True
-                inputs[frame + self.genomes[i].get_duration()][key] = False
+                inputs[frame + genome.get_duration()][key] = False
         return inputs
 
     def get_max_frame(self):
