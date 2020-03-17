@@ -1,4 +1,5 @@
 from lib.genetic_algorithm.individuals.InputIndividual import InputIndividual
+from lib.input_scripts.InputScript import InputScript
 
 
 class InputKeyIndividual(InputIndividual):
@@ -17,17 +18,10 @@ class InputKeyIndividual(InputIndividual):
         Gets the input script of the individual
         :return: <InputScript> the input script that this individual represents
         """
-        inputs = dict()
-        inputs[1] = dict()
+        inputs = InputScript()
 
-        for i in range(1, self.genomes):
-            genome_inputs = self.genomes[i].get_inputs()
-
-            inputs[i + 1] = dict()
-
-            for key_input, status in genome_inputs:
-                inputs[i][key_input] = status
-                if status:
-                    inputs[i+1][key_input] = False
+        for i in range(len(self.genomes)):
+            genome_input = self.genomes[i].get_key_input()
+            inputs.add_input(genome_input, i+1, i+2)
 
         return inputs
