@@ -22,16 +22,16 @@ class InputIndividual:
         :return: <InputIndividual> a new individual that corresponds to the crossover of this individual and the
                                     individual passed
         """
-        new_genomes = dict()
+        new_genomes = list()
         genome_number = len(self.get_genomes())
 
-        random_cut = random.randint(1, genome_number)
+        random_cut = random.randint(0, genome_number - 1)
 
-        for i in range(1, random_cut + 1):
-            new_genomes[i] = self.genomes[i].get_copy()
+        for i in range(0, random_cut):
+            new_genomes.append(self.genomes[i].get_copy())
 
-        for i in range(random_cut + 1, genome_number + 1):
-            new_genomes[i] = individual.get_genomes()[i].get_copy()
+        for i in range(random_cut , genome_number):
+            new_genomes.append(individual.get_genomes()[i].get_copy())
 
         return self.__class__(new_genomes)
 
@@ -44,7 +44,7 @@ class InputIndividual:
         :return: <InputIndividual> a new individual that corresponds to the crossover of this individual and the
                                     individual passed
         """
-        new_genomes = dict()
+        new_genomes = list()
         genome_number = len(self.genomes)
 
         random_cuts = [0]
