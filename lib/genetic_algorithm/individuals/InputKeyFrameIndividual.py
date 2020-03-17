@@ -117,3 +117,13 @@ class InputKeyFrameIndividual(InputIndividual):
                 new_genomes.append(genomes_2[i].get_copy())
 
         return self.__class__(new_genomes)
+
+    def mutate(self):
+        """
+        Mutates a random gene of the current individual
+        """
+        random_genome = random.choice(self.genomes)
+        max_frame = self.get_max_frame()
+        random_genome.mutate_with_max_frame(max_frame)
+
+

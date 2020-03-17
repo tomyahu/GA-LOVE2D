@@ -34,6 +34,13 @@ class KeyFrameGenome(SingleKeyGenome):
 
         return KeyFrameGenome(new_input, new_frame)
 
+    def mutate_with_max_frame(self, max_frame):
+        """
+        Mutates the frame of the individual and changes it to a random frame from 1 to the max frame
+        :param max_frame: <int> the max frame for the genome to mutate
+        """
+        self.frame = random.randint(1,max_frame)
+
     def get_inputs(self):
         """
         Returns an input script with the data that this genome represents
