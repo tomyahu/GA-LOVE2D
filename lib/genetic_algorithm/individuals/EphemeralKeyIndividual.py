@@ -1,5 +1,7 @@
 import random
 from lib.genetic_algorithm.individuals.InputIndividual import InputIndividual
+from lib.input_scripts.InputScript import InputScript
+
 
 class EphemeralKeyIndividual(InputIndividual):
 
@@ -15,18 +17,14 @@ class EphemeralKeyIndividual(InputIndividual):
         Gets the input script of the individual
         :return: <InputScript> the input script that this individual represents
         """
+        inputs = InputScript()
+
         current_frame = 1
-        inputs = dict()
-
-        for i in range(len(self.genomes)):
-            genome_frames = self.genomes[i].get_frames()
-            genome_inputs = self.genomes[i].get_inputs()
-            inputs[current_frame] = genome_inputs
-            inputs[current_frame + genome_frames - 1] = {}
-            for input, val in genome_inputs:
-                inputs[current_frame + genome_frames - 1][input] = not val
-
-            current_frame = current_frame + genome_frames
+        for genome in self.genomes:
+            genome_input = genome.get_key_input()
+            genome_duration = genome.get_frames()
+            inputs.add_input(genome_input, current_frame, current_frame + genome_duration)
+            current_frame += genome_duration
 
         return inputs
 
