@@ -1,5 +1,7 @@
 import random
 from lib.genetic_algorithm.individuals.InputIndividual import InputIndividual
+from lib.input_scripts.InputScript import InputScript
+
 
 class InputKeyFrameIndividual(InputIndividual):
     """
@@ -22,17 +24,11 @@ class InputKeyFrameIndividual(InputIndividual):
         Gets the input script of the individual
         :return: <InputScript> the input script that this individual represents
         """
-        inputs = dict()
+        inputs = InputScript()
         for genome in self.genomes:
-            for frame, key in genome.get_inputs():
-                if not inputs[frame]:
-                    inputs[frame] = dict()
+            genome_input_script = genome.get_inputs()
+            inputs = inputs + genome_input_script
 
-                if not inputs[frame + genome.get_duration()]:
-                    inputs[frame + genome.get_duration()] = {}
-
-                inputs[frame][key] = True
-                inputs[frame + genome.get_duration()][key] = False
         return inputs
 
     def get_max_frame(self):
