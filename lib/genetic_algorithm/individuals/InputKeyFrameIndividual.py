@@ -23,7 +23,7 @@ class InputKeyFrameIndividual(InputIndividual):
         :return: <InputScript> the input script that this individual represents
         """
         inputs = dict()
-        for i in range(1, len(self.genomes)sel+1):
+        for i in range(1, len(self.genomes) + 1):
             for frame, key in self.genomes[i].get_inputs():
                 if not inputs[frame]:
                     inputs[frame] = dict
@@ -57,7 +57,7 @@ class InputKeyFrameIndividual(InputIndividual):
         """
         max_frame_both_individuals = max(self.get_max_frame(), individual.get_max_frame())
 
-        new_genomes = dict()
+        new_genomes = list()
         random_cut = random.randint(1, max_frame_both_individuals)
 
         for i in range(len(self.genomes)):
@@ -65,8 +65,55 @@ class InputKeyFrameIndividual(InputIndividual):
                 new_genomes.append(self.genomes[i].get_copy())
 
 
-        for i in range(individual.genomes):
+        for i in range(len(individual.get_genomes())):
             if individual.genomes[i].get_frame() >= random_cut:
-                new_genomes.append(individual.genomes[i].get_copy())
+                new_genomes.append(individual.get_genomes[i].get_copy())
+
+        return self.__class__(new_genomes)
+
+    def k_point_cross_over(self, individual, k):
+        """
+        A generalization of the single point crossover, it generatess k random cuts in the individual's genomes and
+        intercalates the genomes of both individuals to create a new individual
+        :param individual: <InputIndividual> the individual to do crossover with
+        :param k: <int> the number of cuts of the k-point crossovef
+        :return: <InputIndividual> a new individual that corresponds to the crossover of this individual and the
+                                    individual passed
+        """
+        max_frame_both_individuals = max(self.get_max_frame(), individual.get_max_frame())
+
+        new_genomes = list()
+        random_cuts = [0]
+
+        for i in range(k):
+            random_cuts.append(random.randint(1, max_frame_both_individuals))
+
+        random_cuts.sort()
+        random_cuts.append(max_frame_both_individuals)
+
+        genomes_1 = self.get_genomes()
+        genomes_2 = individual.get_genomes()
+
+        for i in range(len(genomes_1)):
+            genome_frame = genomes_1[i].get_frame()
+            condition = False
+
+            for j in range(1, len(random_cuts), 2):
+                if (random_cuts[j-1] <= genome_frame) and (random_cuts[j] > genome_frame):
+                    condition = True
+
+            if condition:
+                new_genomes.append(genomes_1[i].get_copy())
+
+        for i in range(len(genomes_2)):
+            genome_frame = genomes_2[i].get_frame()
+            condition = False
+
+            for j in range(2, len(random_cuts), 2):
+                if (random_cuts[j-1] <= genome_frame) and (random_cuts[j] > genome_frame):
+                    condition = True
+
+            if condition:
+                new_genomes.append(genomes_2[i].get_copy())
 
         return self.__class__(new_genomes)
