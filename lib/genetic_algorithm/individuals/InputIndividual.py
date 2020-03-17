@@ -1,5 +1,4 @@
 import random
-import math
 
 
 class InputIndividual:
@@ -81,13 +80,20 @@ class InputIndividual:
         """
         new_genomes = list()
 
-        for i in range(math.min(len(self.genomes), len(individual.get_genomes()))):
+        for i in range(min(len(self.genomes), len(individual.get_genomes()))):
             if random.random() < 0.5:
                 new_genomes.append(self.genomes[i].get_copy())
             else:
                 new_genomes.append(individual.get_genomes()[i].get_copy())
 
         return self.__class__(new_genomes)
+
+    def mutate(self):
+        """
+        Mutates a random gene of the individual
+        """
+        random_genome = random.choice(self.genomes)
+        random_genome.mutate()
 
     def get_inputs(self):
         """
