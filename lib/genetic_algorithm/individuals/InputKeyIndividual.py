@@ -18,9 +18,9 @@ class InputKeyIndividual(InputIndividual):
         :return: <InputScript> the input script that this individual represents
         """
         inputs = dict()
-        inputs[0] = dict()
+        inputs[1] = dict()
 
-        for i in range(self.genomes):
+        for i in range(1, self.genomes):
             genome_inputs = self.genomes[i].get_inputs()
 
             inputs[i + 1] = dict()
