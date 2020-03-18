@@ -5,8 +5,16 @@ from lib.genetic_algorithm.population.managers.SelectionManager import Selection
 
 
 class Population:
+    """
+    The population of a genetic algorithm, implements all the methods that make the population reproduce
+    """
 
     def __init__(self, individuals, tester, elitism_ratio):
+        """
+        :param individuals: <list(InputIndividual)> the initial population for the genetic algorithm
+        :param tester: <Tester> the tester to test and assign fitness values to the individuals
+        :param elitism_ratio: <float> the ratio of elitism of the genetic algorithm
+        """
         self.individuals = individuals
         self.tester = tester
         self.elitism_ratio = elitism_ratio
@@ -26,6 +34,10 @@ class Population:
         self.worst_individual = self.individuals[0]
 
     def rank_individuals(self):
+        """
+        Calculates the fitness of all individuals of the population and also saves the best and worst individuals with
+        their respective fitnesses
+        """
         for i in range(len(self.individuals)):
             self.individuals_fitness[i] = self.tester.test(self.individuals[i])
 
@@ -44,6 +56,9 @@ class Population:
                 self.worst_individual = self.individuals[i]
 
     def reset_fitness_calculation(self):
+        """
+        Resets the individual fitnesses and the best and worst individual and their fitnesses
+        """
         for _ in self.individuals:
             self.individuals_fitness.append(0)
 
@@ -53,6 +68,10 @@ class Population:
         self.worst_individual = self.individuals[0]
 
     def reproduce(self):
+        """
+        Reproduces the population based on the calculated fitnesses and updates the current population with the
+        individuals of the next generation
+        """
         new_population = list()
 
         elitism_parents = self.get_best_n_individuals(math.floor(len(self.individuals) * self.elitism_ratio))
@@ -73,6 +92,11 @@ class Population:
         self.individuals = new_population
 
     def get_best_n_individuals(self, n):
+        """
+        Gets the n individuals with the most fitness in a list
+        :param n: <int> the number of individuals to get in order
+        :return: <list(InputIndividual)> the list of the n individuals with the best fitness in the population
+        """
         ordered_individuals = list()
         for i in range(len(self.individuals)):
             ordered_individuals.append([self.individuals[i], self.individuals_fitness[i]])
@@ -89,25 +113,49 @@ class Population:
         return best_n_individuals
 
     def get_best_individual(self):
+        """
+        getter
+        """
         return self.best_individual
 
     def get_mutation_manager(self):
+        """
+        getter
+        """
         return self.mutation_manager
 
     def get_crossover_manager(self):
+        """
+        getter
+        """
         return self.crossover_manager
 
     def get_selection_manager(self):
+        """
+        getter
+        """
         return self.selection_manager
 
     def get_best_fitness(self):
+        """
+        getter
+        """
         return self.best_fitness
 
     def get_worst_fitness(self):
+        """
+        getter
+        """
         return self.worst_fitness
 
     def get_individuals(self):
+        """
+        getter
+        """
         return self.individuals
 
     def get_fitnesses(self):
+        """
+        getter
+        """
         return self.individuals_fitness
