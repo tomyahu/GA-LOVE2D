@@ -1,0 +1,1 @@
+love_path = "C:\Program Files\love_versions\love-0.10.0-win64\love.exe"
