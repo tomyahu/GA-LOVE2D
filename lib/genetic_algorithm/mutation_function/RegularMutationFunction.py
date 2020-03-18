@@ -15,7 +15,7 @@ class RegularMutationFunction(MutationFunction):
 
     def mutate(self, individual):
         """
-        mutates an individual, in this case oit does nothing
+        mutates an individual, given the probability
         :param individual: <InputIndividual> the individual to perform mutation on
         """
         if random.random() < self.mutation_prob:
