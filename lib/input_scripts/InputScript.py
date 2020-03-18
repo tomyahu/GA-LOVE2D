@@ -58,6 +58,5 @@ class InputScript:
         file.write(input_dict_string)
         file.close()
 
-
     def get_input_dict(self):
         return self.input_dict
