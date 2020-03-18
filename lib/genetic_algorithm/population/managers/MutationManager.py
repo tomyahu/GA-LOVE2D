@@ -1,4 +1,4 @@
-from lib.genetic_algorithm.mutation_function.MutationFunction import MutationFunction
+from lib.genetic_algorithm.mutation_functions.MutationFunction import MutationFunction
 
 
 class MutationManager():
