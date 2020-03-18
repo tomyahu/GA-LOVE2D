@@ -10,9 +10,6 @@ from lib.genetic_algorithm.genomes.EphemeralKeyGenome import EphemeralKeyGenome
 
 class InputGenomeFactory:
 
-    def __init__(self):
-        pass
-
     @staticmethod
     def get_random_single_key_genome():
         """
