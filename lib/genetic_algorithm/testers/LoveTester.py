@@ -15,6 +15,11 @@ class LoveTester(Tester):
         :param individual: <InputIndividual> the individual to be tested
         :return: <num> the fitness of the individual
         """
+
+        # Get input script and save it as out
+        input_script = individual.get_inputs()
+        input_script.save_to_file("individuals/out")
+
         with cd("./love_ga_wrapper"):
             p = Popen([love_path, ".", "run_tas"], stdin=PIPE, stdout=PIPE, stderr=PIPE)
 
