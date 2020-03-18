@@ -7,7 +7,7 @@ class SelectionFunction():
     def select(self, population):
         """
         Selects an individual, in this case it always selects the first individual of the population
-        :param population: <Population>
-        :return: <InputIndividual>
+        :param population: <Population> The population of the genetic algorithm to select an individual from
+        :return: <InputIndividual> The selected individual
         """
         return population.get_individuals()[0]
