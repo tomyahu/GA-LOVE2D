@@ -24,18 +24,6 @@ local LoveTASWrapper = extend(LoveWrapper,
         return LoveWrapper.new(setted_dt, setted_seed)
     end)
 
--- init: None -> None
--- Initializes the wrapper, redefines the love functions
-function LoveTASWrapper.init(self)
-    LoveWrapper.init(self)
-
-    love.keypressed = function(key)
-        if key == "r" then
-            self:resetGame()
-        end
-    end
-end
-
 -- resetGameAux: None -> None
 -- auxiliary reset funcion for the wrapper
 function LoveTASWrapper.resetGameAux(self)

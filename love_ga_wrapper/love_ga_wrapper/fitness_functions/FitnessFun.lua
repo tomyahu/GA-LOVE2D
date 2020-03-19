@@ -9,8 +9,8 @@ end)
 
 -- setLoveGACreator: LoveGACreator -> None
 -- setter
-function FitnessFun.setLoveGACreator(self, love_ga_creator)
-  self.love_ga_creator = love_ga_creator
+function FitnessFun.setLoveWrapper(self, love_wrapper)
+  self.love_ga_creator = love_wrapper
 end
 
 -- init: TASInput -> None
