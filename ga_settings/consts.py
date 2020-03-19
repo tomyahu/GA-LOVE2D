@@ -6,4 +6,5 @@ mutation_prob = 0.05
 elitism_ratio = 0.05
 
 #frames_to_skip = 570
+frames_to_clean = 200
 frames_to_test = 1000
