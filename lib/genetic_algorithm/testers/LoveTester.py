@@ -1,4 +1,4 @@
-from ga_settings.consts import love_path
+from ga_settings.consts import love_path, frames_to_clean, frames_to_test
 from lib.genetic_algorithm.testers.Tester import Tester
 from lib.os_lib.cd import cd
 from subprocess import Popen, PIPE, TimeoutExpired
@@ -21,10 +21,14 @@ class LoveTester(Tester):
         input_script.save_to_file("individuals/out")
 
         with cd("./love_ga_wrapper"):
-            p = Popen([love_path, ".", "run_tas"], stdin=PIPE, stdout=PIPE, stderr=PIPE)
+            p = Popen([love_path, ".", "run_tas", "clean", str(frames_to_clean)], stdin=PIPE, stdout=PIPE, stderr=PIPE)
+            p.communicate()
+
+            p = Popen([love_path, ".", "run_tas", "test", str(frames_to_test)], stdin=PIPE, stdout=PIPE, stderr=PIPE)
 
             try:
                 out, err = p.communicate()
+                print(float(out), err)
             except TimeoutExpired:
                 p.kill()
                 out, err = p.communicate()
