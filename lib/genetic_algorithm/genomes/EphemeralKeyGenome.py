@@ -1,3 +1,5 @@
+import random
+
 from lib.genetic_algorithm.genomes.SingleKeyGenome import SingleKeyGenome
 
 
@@ -26,3 +28,11 @@ class EphemeralKeyGenome(SingleKeyGenome):
         getter
         """
         return self.frames
+
+    def mutate_with_max_frame(self, max_frame):
+        """
+        Mutates the frame of the individual and changes it to a random frame from 1 to the max frame
+        :param max_frame: <int> the max frame for the genome to mutate
+        """
+        self.frames = random.randint(1,max_frame)
+        SingleKeyGenome.mutate(self)
