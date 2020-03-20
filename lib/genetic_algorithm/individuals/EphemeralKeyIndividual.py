@@ -77,6 +77,19 @@ class EphemeralKeyIndividual(InputIndividual):
 
     # TODO: Implement method
     def k_point_cross_over(self, individual, k):
+        new_genomes = list()
+        genome_number = len(self.genomes)
+
+        random_cuts = [0]
+
+        for i in range(1, k):
+            random_cuts.append(random.randint(1, genome_number))
+
+        random_cuts.sort()
+        random_cuts.append(genome_number)
+
+        genomes_1 = self.genomes
+        genomes_2 = individual.get_genomes()
         raise(RuntimeError("Not implemented method."))
 
     def mutate(self):
