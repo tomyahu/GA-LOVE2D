@@ -1,6 +1,7 @@
 import random
 from lib.genetic_algorithm.individuals.InputIndividual import InputIndividual
 from lib.input_scripts.InputScript import InputScript
+from lib.genetic_algorithm.genomes.EphemeralKeyGenome import EphemeralKeyGenome
 
 
 class EphemeralKeyIndividual(InputIndividual):
@@ -28,7 +29,55 @@ class EphemeralKeyIndividual(InputIndividual):
 
         return inputs
 
-    # TODO: Reimplement single point and kpoint crossover
+    def single_point_cross_over(self, individual):
+        """
+        Returns the result of a classic crossover between this individual and the passed individual divides the genomes
+        of both individuals in 2 and creates a new individual with the first part of the first and the second of the
+        second
+        :param individual: <EphemeralKeyIndividual> the individual to do crossover with
+        :return: <EphemeralKeyIndividual> a new individual that corresponds to the crossover of this individual and the
+                                    individual passed
+        """
+        new_genomes = list()
+        genome_number = len(self.get_genomes())
+
+        random_cut = random.randint(0, genome_number - 1)
+
+        current_frame = 1
+        current_index = 0
+        while current_frame < random_cut:
+            genome = self.genomes[current_index]
+            genome_duration = genome.get_frames()
+
+            if current_frame + genome_duration < random_cut:
+                copy_genome = genome.get_copy()
+                new_genomes.append(copy_genome)
+                current_frame += genome_duration
+            else:
+                new_genome = EphemeralKeyGenome(genome.get_key_input(), random_cut - current_frame)
+                new_genomes.append(new_genome)
+                current_frame = random_cut
+
+        current_frame = 1
+        for genome in individual.get_genomes():
+            genome_duration = genome.get_frames()
+
+            if current_frame + genome_duration < random_cut:
+                current_frame += genome_duration
+            elif current_frame < random_cut:
+                new_genome = EphemeralKeyGenome(genome.get_key_input(), current_frame + genome_duration - random_cut)
+                new_genomes.append(new_genome)
+                current_frame += genome_duration
+            else:
+                copy_genome = genome.get_copy()
+                new_genomes.append(copy_genome)
+                current_frame += genome_duration
+
+        return self.__class__(new_genomes)
+
+    # TODO: Implement method
+    def k_point_cross_over(self, individual, k):
+        raise(RuntimeError("Not implemented method."))
 
     def mutate(self):
         """
