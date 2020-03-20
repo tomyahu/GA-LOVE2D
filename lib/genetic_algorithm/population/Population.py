@@ -108,7 +108,7 @@ class Population:
 
         best_n_individuals = list()
         for i in range(min(n, len(self.individuals))):
-            best_n_individuals.append(ordered_individuals[i])
+            best_n_individuals.append(ordered_individuals[i][0])
 
         return best_n_individuals
 
