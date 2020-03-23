@@ -1,3 +1,5 @@
+import sys
+
 from ga_settings.consts import love_path, frames_to_clean, frames_to_test, frames_to_skip
 from lib.genetic_algorithm.testers.Tester import Tester
 from lib.input_scripts.InputScript import InputScript
@@ -26,10 +28,10 @@ class LoveTester(Tester):
         input_script.save_to_file("individuals/out")
 
         with cd("./love_ga_wrapper"):
-            p = Popen([love_path, ".", "run_tas", "clean", str(frames_to_clean)], stdin=PIPE, stdout=PIPE, stderr=PIPE)
+            p = Popen([love_path, ".", "run_tas", "clean", str(frames_to_clean), str(sys.argv[1])], stdin=PIPE, stdout=PIPE, stderr=PIPE)
             p.communicate()
 
-            p = Popen([love_path, ".", "run_tas", "out", str(frames_to_test + frames_to_skip)], stdin=PIPE, stdout=PIPE, stderr=PIPE)
+            p = Popen([love_path, ".", "run_tas", "out", str(frames_to_test + frames_to_skip), str(sys.argv[1])], stdin=PIPE, stdout=PIPE, stderr=PIPE)
 
             try:
                 out, err = p.communicate()
