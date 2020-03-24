@@ -21,7 +21,7 @@ end
 function MemoryFitnessFun.mainFun(self)
   collectgarbage("collect")
   local current_memory = collectgarbage("count")
-  return - (current_memory - self.initial_memory)
+  return (current_memory - self.initial_memory)
 end
 
 -- stepFun: None -> None

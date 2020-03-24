@@ -31,7 +31,7 @@ function KWindowDTMeanFitnessFun.mainFun(self)
     acc = math.max(acc, aux / self.k)
   end
   
-  return - acc / step_length
+  return acc / step_length
 end
 
 -- stepFun: None -> None
