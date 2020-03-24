@@ -4,7 +4,8 @@ local FitnessFun = require("love_ga_wrapper.fitness_functions.FitnessFun")
 -------------------------------------------------------------
 
 -- class: KWindowDTMeanFitnessFun
--- A fitness function thet calculates total time of a k window of frames
+-- param: k:int -> the number of frames of the window
+-- A fitness function that calculates total time of a k window of frames
 local KWindowDTMeanFitnessFun = extend(FitnessFun, function(self, k)
     self.k = k
     self.step_array = {}
@@ -35,7 +36,7 @@ function KWindowDTMeanFitnessFun.mainFun(self)
 end
 
 -- stepFun: None -> None
--- The step fitness function, get current delta time
+-- The step fitness function, get current delta time of current frame
 function KWindowDTMeanFitnessFun.stepFun(self)
   table.insert(self.step_array, self.love_ga_creator:getCurrentFrameDt())
 end
