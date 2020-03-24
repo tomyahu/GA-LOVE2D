@@ -5,13 +5,13 @@ local FitnessFun = require("love_ga_wrapper.fitness_functions.FitnessFun")
 -------------------------------------------------------------
 
 -- class: DTMeanFitnessFun
--- A fitness function thet calculates total time of all frames
+-- A fitness function that calculates mean time of all frames
 local DTMeanFitnessFun = extend(FitnessFun, function(self)
     self.step_array = {}
 end)
 
 -- initAux: None -> None
--- The auxiliary initialization function for the fitness calculation
+-- The auxiliary initialization function for the fitness calculation, resets the start time and frame number variables
 function DTMeanFitnessFun.initAux(self)
   self.start_time = socket.gettime()
   self.frame_num = 0
@@ -21,7 +21,7 @@ end
 -- The main fitness function, sums all delta times
 function DTMeanFitnessFun.mainFun(self)
   local delta_time = socket.gettime() - self.start_time 
-  return delta_time
+  return delta_time/self.frame_num
 end
 
 -- stepFun: LoveGACreator, any -> num
