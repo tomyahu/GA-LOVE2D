@@ -4,7 +4,7 @@ local FitnessFun = require("love_ga_wrapper.fitness_functions.FitnessFun")
 -------------------------------------------------------------
 
 -- class: MemoryFitnessFun
--- A fitness function thet calculates total memory at the end of execution
+-- A fitness function that calculates total memory at the end of execution
 local MemoryFitnessFun = extend(FitnessFun, function(self)
     self.initial_memory = 0
 end)
