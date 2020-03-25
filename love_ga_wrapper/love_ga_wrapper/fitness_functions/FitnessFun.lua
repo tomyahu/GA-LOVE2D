@@ -3,11 +3,11 @@ local extend = require("love_ga_wrapper.lib.classes.extend")
 -------------------------------------------------------------
 
 -- class: FitnessFun
+-- a fitness function that calculates something about the state of the game and individual
 local FitnessFun = class(function(self)
     self.individual_tas = nil
 end)
 
--- setLoveGACreator: LoveGACreator -> None
 -- setter
 function FitnessFun.setLoveWrapper(self, love_wrapper)
   self.love_ga_creator = love_wrapper
