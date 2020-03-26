@@ -40,6 +40,6 @@ class LoveTester(Tester):
                 out, err = p.communicate()
 
             if err != b'':
-                raise RuntimeError("Game Crashed.")
+                raise RuntimeError("Game Crashed.\nError: " + err.decode())
 
             return float(out)
