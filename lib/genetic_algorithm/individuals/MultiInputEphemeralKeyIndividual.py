@@ -5,6 +5,10 @@ from lib.genetic_algorithm.genomes.EphemeralKeyGenome import EphemeralKeyGenome
 
 
 class MultiInputEphemeralKeyIndividual(InputIndividual):
+    """
+    An individual composed of only ephemeral key genomes
+    Can represent two or more inputs at a time
+    """
 
     def __init__(self, genomes):
         InputIndividual.__init__(self, genomes)
