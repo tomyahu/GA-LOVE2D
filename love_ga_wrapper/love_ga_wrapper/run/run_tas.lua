@@ -1,6 +1,6 @@
 ---------------------------------------------------------------------------------------------
 local LoveTASWrapper = require("love_ga_wrapper.wrapper.LoveTASWrapperTester")
-local FitnessFun = require("love_ga_wrapper.fitness_functions.MinInputsMemoryFitnessFun")
+local FitnessFun = require("love_ga_wrapper.fitness_functions.MemoryFitnessFun")
 
 local setted_seed = 1
 local setted_dt = 1/12
