@@ -1,10 +1,13 @@
 import math
 
+from ga_settings.word_list import word_list
+from lib.genetic_algorithm.genomes.EphemeralKeyGenome import EphemeralKeyGenome
 from lib.genetic_algorithm.genomes.factories.InputGenomeFactory import InputGenomeFactory
 from lib.genetic_algorithm.individuals.InputKeyIndividual import InputKeyIndividual
 from lib.genetic_algorithm.individuals.InputKeyFrameIndividual import InputKeyFrameIndividual
 from lib.genetic_algorithm.individuals.InputKeyFrameDurationIndividual import InputKeyFrameDurationIndividual
 from lib.genetic_algorithm.individuals.EphemeralKeyIndividual import EphemeralKeyIndividual
+from lib.genetic_algorithm.individuals.MultiInputEphemeralKeyIndividual import MultiInputEphemeralKeyIndividual
 
 
 class InputIndividualFactory:
@@ -85,3 +88,35 @@ class InputIndividualFactory:
         :return: <EphemeralKeyIndividual> the new random ephemeral key individual
         """
         return InputIndividualFactory.get_random_ephemeral_key_individual(size, math.floor(2*frames_to_test/size) + 1)
+
+    @staticmethod
+    def get_random_multi_input_ephemeral_key_individual(frames_to_test, avg_inputs, input_no_input_ratio):
+        """
+        Creates a new multi ephemeral key individual
+        :param frames_to_test:
+        :param input_no_input_ratio:
+        :return:
+        """
+        genomes = list()
+
+        for word in word_list:
+            current_frame = 1
+
+            aux_bool = True
+            while current_frame < frames_to_test:
+                max_genome_duration = int((frames_to_test / avg_inputs) / (1 + input_no_input_ratio))
+                if aux_bool:
+                    aux_bool = False
+                else:
+                    max_genome_duration = int(max_genome_duration * input_no_input_ratio)
+                    aux_bool = True
+
+                new_genome = InputGenomeFactory.get_random_duration_ephemeral_key_genomes(word, max_genome_duration)
+
+                current_frame += new_genome.get_frames()
+                if current_frame < frames_to_test:
+                    genomes.append(new_genome)
+                else:
+                    genomes.append(EphemeralKeyGenome(word, frames_to_test - (current_frame - new_genome.get_frames())))
+
+        return MultiInputEphemeralKeyIndividual(genomes)
