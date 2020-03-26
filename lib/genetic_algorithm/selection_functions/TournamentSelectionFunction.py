@@ -26,7 +26,7 @@ class TournamentSelectionFunction(SelectionFunction):
         individual_indexes = list()
 
         for i in range(self.size):
-            individual_indexes.append( random.choice(individuals))
+            individual_indexes.append( random.randint(0, len(individuals) - 1))
 
         best_individual = individuals[individual_indexes[0]]
         best_fitness = individuals_fitness[individual_indexes[0]]

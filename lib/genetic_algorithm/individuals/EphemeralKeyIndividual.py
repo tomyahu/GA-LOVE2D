@@ -1,6 +1,7 @@
 import random
 from lib.genetic_algorithm.individuals.InputIndividual import InputIndividual
 from lib.input_scripts.InputScript import InputScript
+from lib.genetic_algorithm.genomes.EphemeralKeyGenome import EphemeralKeyGenome
 
 
 class EphemeralKeyIndividual(InputIndividual):
@@ -27,8 +28,6 @@ class EphemeralKeyIndividual(InputIndividual):
             current_frame += genome_duration
 
         return inputs
-
-    # TODO: Reimplement single point and kpoint crossover
 
     def mutate(self):
         """
