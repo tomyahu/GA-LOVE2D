@@ -42,9 +42,9 @@ class MultiInputEphemeralKeyIndividual(InputIndividual):
                 genome_duration = genome.get_frames()
 
                 if aux_bool:
-                    inputs.add_input(genome_input, current_frame, current_frame + genome_duration)
                     aux_bool = False
                 else:
+                    inputs.add_input(genome_input, current_frame, current_frame + genome_duration)
                     aux_bool = True
 
                 current_frame += genome_duration
@@ -58,6 +58,8 @@ class MultiInputEphemeralKeyIndividual(InputIndividual):
         random_key = random.choice(self.genome_list_dict.keys())
         random_genome = random.choice(self.genome_list_dict[random_key])
         random_genome.mutate_with_max_frame(self.get_max_frame())
+
+    # TODO: Define single point and k point crossover
 
     def get_max_frame(self):
         """
