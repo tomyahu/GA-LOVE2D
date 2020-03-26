@@ -93,9 +93,10 @@ class InputIndividualFactory:
     def get_random_multi_input_ephemeral_key_individual(frames_to_test, avg_inputs, input_no_input_ratio):
         """
         Creates a new multi ephemeral key individual
-        :param frames_to_test:
-        :param input_no_input_ratio:
-        :return:
+        :param frames_to_test: <int> the number of frames to test
+        :param avg_inputs: <int> the average number of times any input will be activated
+        :param input_no_input_ratio: <float> the ratio of time an input will be pressed to when its not pressed
+        :return: <MultiInputEphemeralKeyIndividual> the new random multi input ephemeral key individual
         """
         genomes = list()
 
