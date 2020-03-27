@@ -77,10 +77,10 @@ class MultiInputEphemeralKeyIndividual(InputIndividual):
 
     def k_point_cross_over(self, individual, k):
         """
-        TODO: Document this
-        :param individual:
-        :param k:
-        :return:
+        K-point crossover method by every input
+        :param individual: <MultiInputEphemeralKeyIndividual> the individual whom crossover is performed with
+        :param k: <int> the number of cuts to iterate in the crossover
+        :return: <MultiInputEphemeralKeyIndividual> the new created individual by the crossover process
         """
         self_max_frame = self.get_max_frame()
         other_individual_max_frame = individual.get_max_frame()
@@ -144,10 +144,10 @@ class MultiInputEphemeralKeyIndividual(InputIndividual):
 
     def k_point_by_input_cross_over(self, individual, k):
         """
-        TODO: Document this
-        :param individual:
-        :param k:
-        :return:
+        K-point crossover method by every input
+        :param individual: <MultiInputEphemeralKeyIndividual> the individual whom crossover is performed with
+        :param k: <int> the number of cuts to iterate in the crossover
+        :return: <MultiInputEphemeralKeyIndividual> the new created individual by the crossover process
         """
         self_max_frame = self.get_max_frame()
         other_individual_max_frame = individual.get_max_frame()
