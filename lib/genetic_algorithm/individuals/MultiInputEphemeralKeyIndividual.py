@@ -59,7 +59,106 @@ class MultiInputEphemeralKeyIndividual(InputIndividual):
         random_genome = random.choice(self.genome_list_dict[random_key])
         random_genome.mutate_with_max_frame(self.get_max_frame())
 
-    # TODO: Define single point and k point crossover
+    # TODO: k point crossover
+    def single_point_cross_over(self, individual):
+        """
+        Single point crossover method
+        :param individual: <MultiInputEphemeralKeyIndividual> the individual whom crossover is performed with
+        :return: <MultiInputEphemeralKeyIndividual> the new created individual by the crossover process
+        """
+        self_max_frame = self.get_max_frame()
+        other_individual_max_frame = individual.get_max_frame()
+
+        if self_max_frame != other_individual_max_frame:
+            raise RuntimeError("This individual's max frame is not the same as the other individual max frame")
+
+        new_genomes = list()
+        random_cut = random.randint(1, self_max_frame)
+        for key in self.genome_list_dict.keys():
+            self_genome_list = self.genome_list_dict[key]
+            individual_genome_list = individual.genome_list_dict[key]
+
+            current_frame = 1
+            self_genome_list_index = 0
+            while current_frame < random_cut:
+                genome = self_genome_list[self_genome_list_index]
+                current_frame += genome.get_frames()
+
+                if current_frame < random_cut:
+                    new_genomes.append(genome.get_copy())
+                else:
+                    new_genomes.append(EphemeralKeyGenome(key, random_cut - (current_frame - genome.get_frames())))
+                    current_frame = random_cut
+
+                self_genome_list_index += 1
+
+            current_frame = 1
+            individual_genome_list_index = 0
+            while current_frame < random_cut:
+                genome = individual_genome_list[individual_genome_list_index]
+                current_frame += genome.get_frames()
+
+                if current_frame > random_cut:
+                    new_genomes.append(EphemeralKeyGenome(key, current_frame - random_cut))
+
+                individual_genome_list_index += 1
+
+            while individual_genome_list_index < len(individual_genome_list):
+                genome = individual_genome_list[individual_genome_list_index]
+                new_genomes.append(genome.get_copy())
+                individual_genome_list_index += 1
+
+        return MultiInputEphemeralKeyIndividual(new_genomes)
+
+    def single_point_by_input_cross_over(self, individual):
+        """
+        Single point crossover method by every input
+        :param individual: <MultiInputEphemeralKeyIndividual> the individual whom crossover is performed with
+        :return: <MultiInputEphemeralKeyIndividual> the new created individual by the crossover process
+        """
+        self_max_frame = self.get_max_frame()
+        other_individual_max_frame = individual.get_max_frame()
+
+        if self_max_frame != other_individual_max_frame:
+            raise RuntimeError("This individual's max frame is not the same as the other individual max frame")
+
+        new_genomes = list()
+        for key in self.genome_list_dict.keys():
+            random_cut = random.randint(1, self_max_frame)
+            self_genome_list = self.genome_list_dict[key]
+            individual_genome_list = individual.genome_list_dict[key]
+
+            current_frame = 1
+            self_genome_list_index = 0
+            while current_frame < random_cut:
+                genome = self_genome_list[self_genome_list_index]
+                current_frame += genome.get_frames()
+
+                if current_frame < random_cut:
+                    new_genomes.append(genome.get_copy())
+                else:
+                    new_genomes.append(EphemeralKeyGenome(key, random_cut - (current_frame - genome.get_frames())))
+                    current_frame = random_cut
+
+                self_genome_list_index += 1
+
+            current_frame = 1
+            individual_genome_list_index = 0
+            while current_frame < random_cut:
+                genome = individual_genome_list[individual_genome_list_index]
+                current_frame += genome.get_frames()
+
+                if current_frame > random_cut:
+                    new_genomes.append(EphemeralKeyGenome(key, current_frame - random_cut))
+
+                individual_genome_list_index += 1
+
+            while individual_genome_list_index < len(individual_genome_list):
+                genome = individual_genome_list[individual_genome_list_index]
+                new_genomes.append(genome.get_copy())
+                individual_genome_list_index += 1
+
+        return MultiInputEphemeralKeyIndividual(new_genomes)
 
     def get_max_frame(self):
         """
