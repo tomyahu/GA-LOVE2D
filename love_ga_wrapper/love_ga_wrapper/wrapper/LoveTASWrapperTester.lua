@@ -3,10 +3,14 @@ local extend = require("love_ga_wrapper.lib.classes.extend")
 local json = require("love_ga_wrapper.lib.file.pseudo_json.pseudo_json")
 local LoveTASWrapper = require("love_ga_wrapper.wrapper.LoveTASWrapper")
 --------------------------------------------------------------------------------------------------------
-local LoveTASWrapperTester = extend(LoveTASWrapper, function(self, setted_dt, setted_seed, tas_path, fitness_function, frames_to_test, frames_yield_interval)
+local LoveTASWrapperTester = extend(LoveTASWrapper, function(self, setted_dt, setted_seed, tas_path, fitness_function, frames_to_test, frames_yield_interval, metrics)
     self.fitness_fun = fitness_function
     self.fitness_fun:setLoveWrapper(self)
     self.fitness_fun:init()
+    self.metrics = metrics
+    for _, metric_fun in pairs(self.metrics) do
+    	metric_fun:init()
+    end
 
     self.frames_to_test = frames_to_test
     self.frames_yield_interval = frames_yield_interval
@@ -35,15 +39,27 @@ function LoveTASWrapperTester.init(self)
                     self.letFramePass()
                 end
             end
+
             self.fitness_fun:stepFun()
+            for _, metric_fun in pairs(self.metrics) do
+    			metric_fun:stepFun()
+    		end
+
             self:runLoveCycle()
         end
+
         self.fitness_fun:stepFun()
+        for _, metric_fun in pairs(self.metrics) do
+    		metric_fun:stepFun()
+    	end
 
 		output_dict = {}
 		output_dict["fitness"] = self.fitness_fun:mainFun()
 
 		output_dict["metrics"] = {}
+		for metric_name, metric_fun in pairs(self.metrics) do
+    		output_dict["metrics"][metric_name] = metric_fun:mainFun()
+    	end
 
         io.stdout:write(json.encode(output_dict))
         love.event.quit()
