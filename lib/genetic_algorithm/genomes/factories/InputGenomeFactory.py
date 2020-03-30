@@ -53,3 +53,14 @@ class InputGenomeFactory:
         random_key_input = random.choice(word_list)
         random_frames = random.randint(1, max_frames)
         return EphemeralKeyGenome(random_key_input, random_frames)
+
+    @staticmethod
+    def get_random_duration_ephemeral_key_genomes(key_input, max_frames):
+        """
+        Creates a random (in frame number) ephemeral key genome with a predefined key input
+        :param key_input: <str> the input the ephemeral individual will have
+        :param max_frames: <int> the maximum amount of frames that the genome created can have
+        :return: <EphemeralKeyGenome> a random (in frame number) ephemeral key genome with a predefined key input
+        """
+        random_frames = random.randint(1, max_frames)
+        return EphemeralKeyGenome(key_input, random_frames)

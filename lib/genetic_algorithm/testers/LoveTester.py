@@ -12,6 +12,9 @@ class LoveTester(Tester):
     Tester class for testing individuals and get their fitness. Runs the game and returns the resulting fitness.
     """
 
+    def __init__(self, aux_path):
+        self.aux_path = aux_path
+
     def test(self, individual):
         """
         Test an individual and returns their fitness
@@ -25,13 +28,13 @@ class LoveTester(Tester):
         skip_input_script = InputScript("individuals/skip")
 
         input_script = shifted_input_script + skip_input_script
-        input_script.save_to_file("individuals/out")
+        input_script.save_to_file("individuals/" + self.aux_path)
 
         with cd("./love_ga_wrapper"):
             p = Popen([love_path, ".", "run_tas", "clean", str(frames_to_clean), str(sys.argv[1])], stdin=PIPE, stdout=PIPE, stderr=PIPE)
             p.communicate()
 
-            p = Popen([love_path, ".", "run_tas", "out", str(frames_to_test + frames_to_skip), str(sys.argv[1])], stdin=PIPE, stdout=PIPE, stderr=PIPE)
+            p = Popen([love_path, ".", "run_tas", self.aux_path, str(frames_to_test + frames_to_skip), str(sys.argv[1])], stdin=PIPE, stdout=PIPE, stderr=PIPE)
 
             try:
                 out, err = p.communicate()
