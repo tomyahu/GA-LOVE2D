@@ -42,6 +42,8 @@ for i in range(1, generations):
 
     file = open(directory_path + "/gen_" + str(i) + "_data", "w+")
     file.write(str(population.get_best_fitness()))
+    for metric_key in best_individual.get_metrics().keys():
+        file.write(metric_key + "\t" + str(best_individual.get_metrics()[metric_key]))
     file.close()
 
     population.reproduce()
@@ -61,3 +63,9 @@ shifted_input_script = original_input_script.shift_frames(frames_to_skip)
 
 input_script = shifted_input_script + skip_input_script
 input_script.save_to_file(directory_path + "/gen_" + str(i))
+
+file = open(directory_path + "/gen_" + str(i) + "_data", "w+")
+file.write(str(population.get_best_fitness()))
+for metric_key in best_individual.get_metrics().keys():
+    file.write(metric_key + "\t" + str(best_individual.get_metrics()[metric_key]))
+file.close()
