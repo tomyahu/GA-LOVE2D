@@ -40,7 +40,6 @@ class EphemeralKeyIndividual(InputIndividual):
         random_genome = random.choice(self.genomes)
         random_genome.mutate_with_max_frame(self.get_max_frame())
 
-
     def get_max_frame(self):
         """
         getter
