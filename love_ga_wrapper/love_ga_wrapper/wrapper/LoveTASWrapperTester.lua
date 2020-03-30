@@ -1,5 +1,6 @@
 local class = require("love_ga_wrapper.lib.classes.class")
 local extend = require("love_ga_wrapper.lib.classes.extend")
+local json = require("love_ga_wrapper.lib.file.pseudo_json.pseudo_json")
 local LoveTASWrapper = require("love_ga_wrapper.wrapper.LoveTASWrapper")
 --------------------------------------------------------------------------------------------------------
 local LoveTASWrapperTester = extend(LoveTASWrapper, function(self, setted_dt, setted_seed, tas_path, fitness_function, frames_to_test, frames_yield_interval)
@@ -39,7 +40,12 @@ function LoveTASWrapperTester.init(self)
         end
         self.fitness_fun:stepFun()
 
-        io.stdout:write(self.fitness_fun:mainFun())
+		output_dict = {}
+		output_dict["fitness"] = self.fitness_fun:mainFun()
+
+		output_dict["metrics"] = {}
+
+        io.stdout:write(json.encode(output_dict))
         love.event.quit()
     end)
 end
