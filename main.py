@@ -47,3 +47,12 @@ for i in range(1, generations):
 
     print("Fitness:", population.get_best_fitness())
     print("")
+
+
+i = 30
+best_individual = population.get_best_individual()
+original_input_script = best_individual.get_inputs()
+shifted_input_script = original_input_script.shift_frames(frames_to_skip)
+
+input_script = shifted_input_script + skip_input_script
+input_script.save_to_file(directory_path + "/gen_" + str(i))
