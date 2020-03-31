@@ -63,7 +63,6 @@ for i in range(1, generations + 1):
     input_script = shifted_input_script + skip_input_script
     input_script.save_to_file(directory_path + "/gen_" + str(i))
 
-
     # Add results to output dictionary
     data_dict["fitness"].append(population.get_best_fitness())
     for metric_key in best_individual.get_metrics().keys():
