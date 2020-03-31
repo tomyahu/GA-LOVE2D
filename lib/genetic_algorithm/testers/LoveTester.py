@@ -33,11 +33,11 @@ class LoveTester(Tester):
         input_script.save_to_file("individuals/" + self.aux_path)
 
         with cd("./love_ga_wrapper"):
-            p = Popen([love_path, ".", "run_tas", self.clean_script, str(frames_to_clean), str(frames_interval)],
+            p = Popen([love_path, ".", "run_tas", self.clean_script, str(frames_to_clean), "0", str(frames_interval)],
                       stdin=PIPE, stdout=PIPE, stderr=PIPE)
             p.communicate()
 
-            p = Popen([love_path, ".", "run_tas", self.aux_path, str(frames_to_test + frames_to_skip),
+            p = Popen([love_path, ".", "run_tas", self.aux_path, str(frames_to_test), str(frames_to_skip),
                        str(frames_interval)], stdin=PIPE, stdout=PIPE, stderr=PIPE)
 
             try:

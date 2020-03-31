@@ -9,4 +9,4 @@ frames_to_clean = 200
 frames_to_skip = 800
 frames_to_test = 1000
 
-frames_interval = 0
+frames_interval = 1
