@@ -3,6 +3,17 @@ local extend = require("love_ga_wrapper.lib.classes.extend")
 local json = require("love_ga_wrapper.lib.file.pseudo_json.pseudo_json")
 local LoveTASWrapper = require("love_ga_wrapper.wrapper.LoveTASWrapper")
 --------------------------------------------------------------------------------------------------------
+
+-- class: LoveTASWrapperTester
+-- param: setted_dt:num -> the delta time that happens between each frame
+-- param: setted_seed:num -> the seed of the random numbers to use
+-- param: tas_path:str -> the path of the input sequence
+-- param: fitness_function:FitnessFun -> the fitness function to compute
+-- param: frames_to_test:int -> the amount of frames to run the input sequence
+-- param: frames_yield_interval:int -> the amount of frames to run a frame in love
+-- param: metrics:list(FitnessFun) -> the list of metrics to compute with the fitness function
+-- The wrapper that runs an input sequence for a number of frames to test and computes the fitness function and a list
+-- of metrics
 local LoveTASWrapperTester = extend(LoveTASWrapper, function(self, setted_dt, setted_seed, tas_path, fitness_function, frames_to_test, frames_yield_interval, metrics)
     self.fitness_fun = fitness_function
     self.fitness_fun:setLoveWrapper(self)
