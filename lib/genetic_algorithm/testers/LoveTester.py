@@ -1,3 +1,5 @@
+import json
+
 from ga_settings.consts import love_path, frames_to_clean, frames_to_test, frames_to_skip, frames_interval
 from lib.genetic_algorithm.testers.Tester import Tester
 from lib.input_scripts.InputScript import InputScript
@@ -31,11 +33,11 @@ class LoveTester(Tester):
         input_script.save_to_file("individuals/" + self.aux_path)
 
         with cd("./love_ga_wrapper"):
-            p = Popen([love_path, ".", "run_tas", self.clean_script, str(frames_to_clean), str(frames_interval)],
+            p = Popen([love_path, ".", "run_tas", self.clean_script, str(frames_to_clean), "0", str(frames_interval)],
                       stdin=PIPE, stdout=PIPE, stderr=PIPE)
             p.communicate()
 
-            p = Popen([love_path, ".", "run_tas", self.aux_path, str(frames_to_test + frames_to_skip),
+            p = Popen([love_path, ".", "run_tas", self.aux_path, str(frames_to_test), str(frames_to_skip),
                        str(frames_interval)], stdin=PIPE, stdout=PIPE, stderr=PIPE)
 
             try:
@@ -47,4 +49,11 @@ class LoveTester(Tester):
             if err != b'':
                 raise RuntimeError("Game Crashed.\nError: " + err.decode())
 
-            return float(out)
+            out = json.loads(out.decode())
+
+            fitness = out["fitness"]
+            metrics = out["metrics"]
+            for metric_key in metrics.keys():
+                individual.add_metric(metric_key, metrics[metric_key])
+
+            return float(fitness)

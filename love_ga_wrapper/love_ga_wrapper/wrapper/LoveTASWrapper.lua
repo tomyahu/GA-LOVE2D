@@ -8,7 +8,8 @@ local PseudoJsonDictFile = require("love_ga_wrapper.lib.file.PseudoJsonDictFile"
 -- class: LoveTASWrapper
 -- param: setted_dt:num -> the delta time that happens between each frame
 -- param: setted_seed:num -> the seed of the random numbers to use
--- param: tas:TASInput -> the tas object
+-- param: tas_path:str -> the path of the input sequence
+-- a wrapper to run an input sequence over the current game
 local LoveTASWrapper = extend(LoveWrapper,
     function(self, setted_dt, setted_seed, tas_path)
         self.tas = TASInput.new()

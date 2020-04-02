@@ -120,6 +120,12 @@ class InputIndividual:
         """
         return self.metrics[key]
 
+    def get_metrics(self):
+        """
+        getter
+        """
+        return self.metrics
+
     def get_genomes(self):
         """
         getter
