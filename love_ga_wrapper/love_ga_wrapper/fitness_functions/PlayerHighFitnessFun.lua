@@ -11,7 +11,7 @@ local PlayerHighFitnessFun = extend(FitnessFun, function(self)
 end)
 
 -- initAux: None -> None
--- The auxiliary initialization function for the fitness calculation, resets the distances list
+-- The auxiliary initialization function for the fitness calculation, resets the heights list
 function PlayerHighFitnessFun.initAux(self)
   self.heights = {}
   self.state = Gamestate.currentState().name
@@ -34,7 +34,7 @@ end
 function PlayerHighFitnessFun.stepFun(self)
   local player_x, player_y = self:getPlayerPos()
 
-  table.insert(self.distances, player_y)
+  table.insert(self.heights, player_y)
 end
 
 -- getPlayerPos: None -> num, num
