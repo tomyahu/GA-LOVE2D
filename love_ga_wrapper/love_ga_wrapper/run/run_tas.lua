@@ -12,11 +12,16 @@ local fitness_fun = FitnessFun.new()
 
 local metrics = {}
 
-
 arg[3] = nil
 arg[4] = nil
 arg[5] = nil
 arg[6] = nil
+for i, val in pairs(arg) do
+	if i > 6 then
+		arg[i-5] = arg[i]
+		arg[i] = nil
+	end
+end
 
 local tas_wrapper = LoveTASWrapper.new(setted_dt, setted_seed, input_script_path, fitness_fun, frames_to_test, frames_to_yield_interval, metrics, frames_to_skip)
 
