@@ -87,5 +87,5 @@ for i in range(1, generations + 1):
 # Save results
 file = open(directory_path + "/data", "w+")
 for data_key in data_dict.keys():
-    file.write(data_key + ": " + str(data_dict[data_key]))
+    file.write(data_key + ": " + str(data_dict[data_key]) + "\n")
 file.close()
