@@ -1,6 +1,6 @@
 ---------------------------------------------------------------------------------------------
 local LoveTASWrapper = require("love_ga_wrapper.wrapper.LoveTASWrapperTesterSkip")
-local FitnessFun = require("love_ga_wrapper.fitness_functions.PlayerStayInPosFitnessFun")
+local FitnessFun = require("love_ga_wrapper.fitness_functions.PlayerHighFitnessFun")
 
 local setted_seed = 1
 local setted_dt = 1/12
