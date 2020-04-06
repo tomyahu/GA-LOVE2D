@@ -2,6 +2,7 @@ import os
 import sys
 
 from lib.genetic_algorithm.population.PopulationFactory import PopulationFactory
+from lib.genetic_algorithm.testers.LoveHawkthornTester import LoveHawkthornTester
 from lib.genetic_algorithm.testers.LoveTester import LoveTester
 from ga_settings.consts import generations, individual_num, frames_to_test, mutation_prob, elitism_ratio, \
     frames_to_skip, frames_to_clean
@@ -23,7 +24,10 @@ individuals = list()
 for i in range(individual_num):
     individuals.append(InputIndividualFactory.get_random_ephemeral_individual_with_frames_to_test(80, frames_to_test))
 
-tester = LoveTester(sys.argv[1], sys.argv[2], sys.argv[3])
+#tester = LoveTester(aux_path=sys.argv[1], clean_script=sys.argv[2], skip_script=sys.argv[3])
+tester = LoveHawkthornTester(aux_path=sys.argv[1], clean_script=sys.argv[2], skip_script=sys.argv[3], level="village-forest", x_pos=96, y_pos=23)
+#tester = LoveHawkthornTester(aux_path=sys.argv[1], clean_script=sys.argv[2], skip_script=sys.argv[3], level="village-forest-stonerspeak", x_pos=125, y_pos=33)
+#tester = LoveHawkthornTester(aux_path=sys.argv[1], clean_script=sys.argv[2], skip_script=sys.argv[3], level="village-forest-stonerspeak", x_pos=165, y_pos=30)
 population = PopulationFactory.get_classic_population(individuals, tester, mutation_prob, elitism_ratio)
 
 

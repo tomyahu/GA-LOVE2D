@@ -5,8 +5,8 @@ individual_num = 100
 mutation_prob = 0.05
 elitism_ratio = 0.05
 
-frames_to_clean = 200
-frames_to_skip = 3250
+frames_to_clean = 0
+frames_to_skip = 0
 frames_to_test = 500
 
-frames_interval = 0
+frames_interval = 4
