@@ -2,6 +2,7 @@ import math
 from lib.genetic_algorithm.population.managers.CrossoverManager import CrossoverManager
 from lib.genetic_algorithm.population.managers.MutationManager import MutationManager
 from lib.genetic_algorithm.population.managers.SelectionManager import SelectionManager
+from lib.genetic_algorithm.population.managers.TesterManager import TesterManager
 
 
 class Population:
@@ -9,14 +10,14 @@ class Population:
     The population of a genetic algorithm, implements all the methods that make the population reproduce
     """
 
-    def __init__(self, individuals, tester, elitism_ratio):
+    def __init__(self, individuals, tester_manager, elitism_ratio):
         """
         :param individuals: <list(InputIndividual)> the initial population for the genetic algorithm
-        :param tester: <Tester> the tester to test and assign fitness values to the individuals
+        :param tester_manager: <TesterManager> the tester manager to test and assign fitness values to the individuals
         :param elitism_ratio: <float> the ratio of elitism of the genetic algorithm
         """
         self.individuals = individuals
-        self.tester = tester
+        self.tester_manager = tester_manager
         self.elitism_ratio = elitism_ratio
 
         self.crossover_manager = CrossoverManager()
@@ -38,8 +39,7 @@ class Population:
         Calculates the fitness of all individuals of the population and also saves the best and worst individuals with
         their respective fitnesses
         """
-        for i in range(len(self.individuals)):
-            self.individuals_fitness[i] = self.tester.test(self.individuals[i])
+        self.tester_manager.test_population(self)
 
         self.best_fitness = self.individuals_fitness[0]
         self.worst_fitness = self.individuals_fitness[0]
