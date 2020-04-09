@@ -13,6 +13,7 @@ class InputScript:
 
         f = open(file_path)
         input_script_str = f.read()
+        f.close()
         input_script_str = input_script_str.replace("false", "False")
         input_script_str = input_script_str.replace("true", "True")
 

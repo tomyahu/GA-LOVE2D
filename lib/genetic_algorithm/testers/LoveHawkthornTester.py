@@ -1,7 +1,7 @@
 import json
 from subprocess import Popen, PIPE, TimeoutExpired
 
-from ga_settings.consts import love_path, frames_interval, frames_to_test, frames_to_skip
+from ga_settings.consts import love_path, frames_interval, frames_to_test, frames_to_skip, absolute_path
 from lib.genetic_algorithm.testers.LoveTester import LoveTester
 from lib.os_lib.cd import cd
 
@@ -33,9 +33,9 @@ class LoveHawkthornTester(LoveTester):
 
         # Get input script and save it as out
         input_script = individual.get_inputs()
-        input_script.save_to_file("individuals/" + self.aux_path)
+        input_script.save_to_file(absolute_path + "/individuals/" + self.aux_path)
 
-        with cd("./love_ga_wrapper"):
+        with cd(absolute_path + "/love_ga_wrapper"):
             p = Popen(
                 [love_path, ".", "run_tas", self.aux_path, str(frames_to_test),
                  str(frames_to_skip), str(frames_interval),
