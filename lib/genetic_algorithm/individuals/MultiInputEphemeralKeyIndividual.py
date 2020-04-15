@@ -55,9 +55,26 @@ class MultiInputEphemeralKeyIndividual(InputIndividual):
         """
         Mutates a random gene of the current individual
         """
-        random_key = random.choice(self.genome_list_dict.keys())
+        random_key = random.choice(list(self.genome_list_dict.keys()))
         random_genome = random.choice(self.genome_list_dict[random_key])
-        random_genome.mutate_with_max_frame(self.get_max_frame())
+        random_genome.mutate_with_max_frame(random_genome.get_frames() + 10)
+
+        new_genomes = list()
+
+        max_frame = 0
+        for i in range(len(self.genome_list_dict[random_key])):
+            genome = self.genome_list_dict[random_key][i]
+            if (max_frame < self.max_frame) and (max_frame + genome.get_frames() > self.max_frame):
+                new_genomes.append(EphemeralKeyGenome(random_key, self.max_frame - max_frame))
+                max_frame += self.max_frame - max_frame
+            elif (max_frame < self.max_frame):
+                new_genomes.append(genome)
+                max_frame += genome.get_frames()
+
+        if max_frame < self.max_frame:
+            new_genomes.append(EphemeralKeyGenome(random_key, self.max_frame - max_frame))
+
+        self.genome_list_dict[random_key] = new_genomes
 
     def single_point_cross_over(self, individual):
         """
@@ -73,7 +90,7 @@ class MultiInputEphemeralKeyIndividual(InputIndividual):
         :param individual: <MultiInputEphemeralKeyIndividual> the individual whom crossover is performed with
         :return: <MultiInputEphemeralKeyIndividual> the new created individual by the crossover process
         """
-        return self.k_point_by_input_cross_over()
+        return self.k_point_by_input_cross_over(individual, 1)
 
     def k_point_cross_over(self, individual, k):
         """
@@ -93,6 +110,8 @@ class MultiInputEphemeralKeyIndividual(InputIndividual):
         for i in range(k):
             random_cuts.append(random.randint(2, self_max_frame - 1))
         random_cuts.sort()
+        random_cuts.append(self_max_frame+1)
+
         for key in self.genome_list_dict.keys():
             genomes1 = self.genome_list_dict[key]
             genomes2 = individual.genome_list_dict[key]
@@ -107,38 +126,39 @@ class MultiInputEphemeralKeyIndividual(InputIndividual):
             for genome in genomes2:
                 genomes2_frames.append(genome.get_frames() + genomes2_frames[-1])
 
-            genomes1_index = 1
-            genomes2_index = 1
+            genomes1_frames_index = 1
+            genomes2_frames_index = 1
             for random_cut in random_cuts:
-                while (genomes1_index < len(genomes1)) and (genomes1[genomes1_index] < random_cut):
-                    new_genomes_frames.append(genomes1_index)
-                    genomes1_index += 1
+                while (genomes1_frames[genomes1_frames_index] < random_cut):
+                    new_genomes_frames.append(genomes1_frames[genomes1_frames_index])
+                    genomes1_frames_index += 1
 
-                while (genomes2_index < len(genomes2)) and (genomes2[genomes1_index] < random_cut):
-                    genomes2_index += 1
+                while (genomes2_frames[genomes2_frames_index] < random_cut):
+                    genomes2_frames_index += 1
 
-                if (genomes1_index % 2) != (genomes2_index % 2):
-                    if genomes2[genomes2_index] == random_cut:
-                        genomes2_index += 1
+                if (genomes1_frames_index % 2) != (genomes2_frames_index % 2):
+                    if genomes2_frames[genomes2_frames_index] == random_cut:
+                        genomes2_frames_index += 1
                     else:
                         new_genomes_frames.append(random_cut)
 
                 # swap genomes1 with genomes2
                 aux_genomes = genomes1
-                aux_genomes_index = genomes1_index
+                aux_genomes_index = genomes1_frames_index
                 aux_genomes_frames = genomes1_frames
 
                 genomes1 = genomes2
-                genomes1_index = genomes2_index
+                genomes1_frames_index = genomes2_frames_index
                 genomes1_frames = genomes2_frames
 
                 genomes2 = aux_genomes
-                genomes2_index = aux_genomes_index
+                genomes2_frames_index = aux_genomes_index
                 genomes2_frames = aux_genomes_frames
 
-            while genomes1_index < len(genomes1):
-                new_genomes_frames.append(genomes1_index)
-                genomes1_index += 1
+            new_genomes_frames.append(self_max_frame+1)
+
+            for i in range(len(new_genomes_frames) - 1):
+                new_genomes.append(EphemeralKeyGenome(key, new_genomes_frames[i+1] - new_genomes_frames[i]))
 
         return MultiInputEphemeralKeyIndividual(new_genomes)
 
