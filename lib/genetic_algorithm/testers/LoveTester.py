@@ -1,6 +1,7 @@
 import json
 
-from ga_settings.consts import love_path, frames_to_clean, frames_to_test, frames_to_skip, frames_interval
+from ga_settings.consts import love_path, frames_to_clean, frames_to_test, frames_to_skip, frames_interval, \
+    absolute_path
 from lib.genetic_algorithm.testers.Tester import Tester
 from lib.input_scripts.InputScript import InputScript
 from lib.os_lib.cd import cd
@@ -27,12 +28,12 @@ class LoveTester(Tester):
         # Get input script and save it as out
         original_input_script = individual.get_inputs()
         shifted_input_script = original_input_script.shift_frames(frames_to_skip)
-        skip_input_script = InputScript("individuals/" + self.skip_script)
+        skip_input_script = InputScript(absolute_path + "/individuals/" + self.skip_script)
 
         input_script = shifted_input_script + skip_input_script
-        input_script.save_to_file("individuals/" + self.aux_path)
+        input_script.save_to_file(absolute_path + "/individuals/" + self.aux_path)
 
-        with cd("./love_ga_wrapper"):
+        with cd(absolute_path + "/love_ga_wrapper"):
             p = Popen([love_path, ".", "run_tas", self.clean_script, str(frames_to_clean), "0", str(frames_interval)],
                       stdin=PIPE, stdout=PIPE, stderr=PIPE)
             p.communicate()

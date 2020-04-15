@@ -1,4 +1,8 @@
+import os
+
 love_path = "C:\Program Files\love_versions\love-0.10.0-win64\love.exe"
+
+absolute_path = os.getcwd()
 
 generations = 30
 individual_num = 100
