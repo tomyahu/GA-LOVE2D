@@ -176,12 +176,8 @@ class MultiInputEphemeralKeyIndividual(InputIndividual):
             raise RuntimeError("This individual's max frame is not the same as the other individual max frame")
 
         new_genomes = list()
-        for key in self.genome_list_dict.keys():
-            random_cuts = list()
-            for i in range(k):
-                random_cuts.append(random.randint(2, self_max_frame - 1))
-            random_cuts.sort()
 
+        for key in self.genome_list_dict.keys():
             genomes1 = self.genome_list_dict[key]
             genomes2 = individual.genome_list_dict[key]
 
@@ -195,38 +191,46 @@ class MultiInputEphemeralKeyIndividual(InputIndividual):
             for genome in genomes2:
                 genomes2_frames.append(genome.get_frames() + genomes2_frames[-1])
 
-            genomes1_index = 1
-            genomes2_index = 1
+            genomes1_frames_index = 1
+            genomes2_frames_index = 1
+
+            random_cuts = list()
+            for i in range(k):
+                random_cuts.append(random.randint(2, self_max_frame - 1))
+            random_cuts.sort()
+            random_cuts.append(self_max_frame + 1)
+
             for random_cut in random_cuts:
-                while (genomes1_index < len(genomes1)) and (genomes1[genomes1_index] < random_cut):
-                    new_genomes_frames.append(genomes1_index)
-                    genomes1_index += 1
+                while (genomes1_frames[genomes1_frames_index] < random_cut):
+                    new_genomes_frames.append(genomes1_frames[genomes1_frames_index])
+                    genomes1_frames_index += 1
 
-                while (genomes2_index < len(genomes2)) and (genomes2[genomes1_index] < random_cut):
-                    genomes2_index += 1
+                while (genomes2_frames[genomes2_frames_index] < random_cut):
+                    genomes2_frames_index += 1
 
-                if (genomes1_index % 2) != (genomes2_index % 2):
-                    if genomes2[genomes2_index] == random_cut:
-                        genomes2_index += 1
+                if (genomes1_frames_index % 2) != (genomes2_frames_index % 2):
+                    if genomes2_frames[genomes2_frames_index] == random_cut:
+                        genomes2_frames_index += 1
                     else:
                         new_genomes_frames.append(random_cut)
 
                 # swap genomes1 with genomes2
                 aux_genomes = genomes1
-                aux_genomes_index = genomes1_index
+                aux_genomes_index = genomes1_frames_index
                 aux_genomes_frames = genomes1_frames
 
                 genomes1 = genomes2
-                genomes1_index = genomes2_index
+                genomes1_frames_index = genomes2_frames_index
                 genomes1_frames = genomes2_frames
 
                 genomes2 = aux_genomes
-                genomes2_index = aux_genomes_index
+                genomes2_frames_index = aux_genomes_index
                 genomes2_frames = aux_genomes_frames
 
-            while genomes1_index < len(genomes1):
-                new_genomes_frames.append(genomes1_index)
-                genomes1_index += 1
+            new_genomes_frames.append(self_max_frame + 1)
+
+            for i in range(len(new_genomes_frames) - 1):
+                new_genomes.append(EphemeralKeyGenome(key, new_genomes_frames[i + 1] - new_genomes_frames[i]))
 
         return MultiInputEphemeralKeyIndividual(new_genomes)
 
