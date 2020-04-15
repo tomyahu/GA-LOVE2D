@@ -5,12 +5,12 @@ from lib.genetic_algorithm.population.PopulationFactory import PopulationFactory
 from lib.genetic_algorithm.testers.LoveHawkthornTester import LoveHawkthornTester
 from lib.genetic_algorithm.testers.LoveTester import LoveTester
 from ga_settings.consts import generations, individual_num, frames_to_test, mutation_prob, elitism_ratio, \
-    frames_to_skip, frames_to_clean
+    frames_to_skip, frames_to_clean, absolute_path
 from lib.genetic_algorithm.individuals.factories.InputIndividualFactory import InputIndividualFactory
 from lib.input_scripts.InputScript import InputScript
 
 # Create target Directory
-directory_path = "individuals/" + sys.argv[4]
+directory_path = absolute_path + "/individuals/" + sys.argv[4]
 
 try:
     os.mkdir(directory_path)
@@ -28,7 +28,12 @@ for i in range(individual_num):
 tester = LoveHawkthornTester(aux_path=sys.argv[1], clean_script=sys.argv[2], skip_script=sys.argv[3], level="village-forest", x_pos=96, y_pos=23)
 #tester = LoveHawkthornTester(aux_path=sys.argv[1], clean_script=sys.argv[2], skip_script=sys.argv[3], level="village-forest-stonerspeak", x_pos=125, y_pos=33)
 #tester = LoveHawkthornTester(aux_path=sys.argv[1], clean_script=sys.argv[2], skip_script=sys.argv[3], level="village-forest-stonerspeak", x_pos=165, y_pos=30)
-population = PopulationFactory.get_classic_population(individuals, tester, mutation_prob, elitism_ratio)
+
+testers = list()
+for i in range(5):
+    testers.append(LoveHawkthornTester(aux_path=sys.argv[1] + str(i), clean_script=sys.argv[2], skip_script=sys.argv[3], level="village-forest", x_pos=96, y_pos=23))
+
+population = PopulationFactory.get_classic_parallel_population(individuals, testers, mutation_prob, elitism_ratio)
 
 
 # Rank first generation of the population
@@ -39,7 +44,7 @@ print("")
 
 
 # Import input script
-skip_input_script = InputScript("individuals/" + sys.argv[3])
+skip_input_script = InputScript(absolute_path + "/individuals/" + sys.argv[3])
 
 
 # Generate data dict with the experiment data and space for results
@@ -87,5 +92,5 @@ for i in range(1, generations + 1):
 # Save results
 file = open(directory_path + "/data", "w+")
 for data_key in data_dict.keys():
-    file.write(data_key + ": " + str(data_dict[data_key]))
+    file.write(data_key + ": " + str(data_dict[data_key]) + "\n")
 file.close()
