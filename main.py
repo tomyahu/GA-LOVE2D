@@ -22,12 +22,14 @@ except FileExistsError:
 # Create population
 individuals = list()
 for i in range(individual_num):
-    individuals.append(InputIndividualFactory.get_random_ephemeral_individual_with_frames_to_test(80, frames_to_test))
+    individuals.append(InputIndividualFactory.get_random_multi_input_ephemeral_key_individual(frames_to_test, 10, 0.2))
 
 #tester = LoveTester(aux_path=sys.argv[1], clean_script=sys.argv[2], skip_script=sys.argv[3])
-tester = LoveHawkthornTester(aux_path=sys.argv[1], clean_script=sys.argv[2], skip_script=sys.argv[3], level="village-forest", x_pos=96, y_pos=23)
+#tester = LoveHawkthornTester(aux_path=sys.argv[1], clean_script=sys.argv[2], skip_script=sys.argv[3], level="village-forest", x_pos=96, y_pos=23)
 #tester = LoveHawkthornTester(aux_path=sys.argv[1], clean_script=sys.argv[2], skip_script=sys.argv[3], level="village-forest-stonerspeak", x_pos=125, y_pos=33)
 #tester = LoveHawkthornTester(aux_path=sys.argv[1], clean_script=sys.argv[2], skip_script=sys.argv[3], level="village-forest-stonerspeak", x_pos=165, y_pos=30)
+
+tester = LoveHawkthornTester(aux_path=sys.argv[1], clean_script=sys.argv[2], skip_script=sys.argv[3], level="forest", x_pos=116, y_pos=11)
 population = PopulationFactory.get_classic_population(individuals, tester, mutation_prob, elitism_ratio)
 
 

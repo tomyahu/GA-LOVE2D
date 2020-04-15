@@ -1,6 +1,6 @@
 ---------------------------------------------------------------------------------------------
 local LoveTASWrapper = require("love_ga_wrapper.wrapper.LoveTASWrapperTesterSkip")
-local FitnessFun = require("love_ga_wrapper.fitness_functions.PlayerHighFitnessFun")
+local FitnessFun = require("love_ga_wrapper.fitness_functions.PlayerMoveToFitnessFun")
 
 local setted_seed = 1
 local setted_dt = 1/12
@@ -8,7 +8,7 @@ local input_script_path = "../individuals/" .. arg[3]
 local frames_to_test = tonumber(arg[4])
 local frames_to_skip = tonumber(arg[5])
 local frames_to_yield_interval = tonumber(arg[6])
-local fitness_fun = FitnessFun.new()
+local fitness_fun = FitnessFun.new(2690, 223)
 
 local metrics = {}
 

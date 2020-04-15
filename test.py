@@ -3,14 +3,11 @@ from lib.os_lib.cd import cd
 from subprocess import Popen, PIPE, TimeoutExpired
 
 
-individual_path = "skip"
+individual_path = "out_dir/gen_30"
 
 with cd("./love_ga_wrapper"):
-    p = Popen([love_path, ".", "run_tas", "clean", str(frames_to_clean), "0", "0"], stdin=PIPE, stdout=PIPE,
-              stderr=PIPE)
-    p.communicate()
 
-    p = Popen([love_path, ".", "run_tas", individual_path, "5000", str(frames_to_skip), "2"], stdin=PIPE,
+    p = Popen([love_path, ".", "run_tas", individual_path, str(frames_to_test), str(frames_to_skip), "1", "--level=" + "forest", "--position=" + str(116) + "," + str(11)], stdin=PIPE,
               stdout=PIPE, stderr=PIPE)
 
     try:
