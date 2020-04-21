@@ -37,7 +37,7 @@ class EphemeralKeyIndividual(InputIndividual):
         Mutates a random gene of the current individual
         """
         random_genome = random.choice(self.genomes)
-        random_genome.mutate_with_max_frame(self.get_max_frame())
+        random_genome.mutate_with_max_frame(random_genome.get_frames + 10)
 
     def get_max_frame(self):
         """
