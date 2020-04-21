@@ -7,11 +7,12 @@ class TournamentSelectionFunction(SelectionFunction):
     Selection function that selects individuals using the tournament algorithm
     """
 
-    def __init__(self, size):
+    def __init__(self, size, p=0.9):
         """
         :param size: <int> the number of participants in the tournament
         """
         self.size = size
+        self.p = p
 
     def select(self, population):
         """
@@ -23,17 +24,19 @@ class TournamentSelectionFunction(SelectionFunction):
         individuals = population.get_individuals()
         individuals_fitness = population.get_fitnesses()
 
-        individual_indexes = list()
+        individual_array = list()
 
         for i in range(self.size):
-            individual_indexes.append( random.randint(0, len(individuals) - 1))
+            random_index = random.randint(0, len(individuals) - 1)
+            individual_array.append((individuals[random_index], individuals_fitness[random_index], random_index))
 
-        best_individual = individuals[individual_indexes[0]]
-        best_fitness = individuals_fitness[individual_indexes[0]]
+        def sortFitness(individual):
+            return individual[1]
 
-        for i in range(1, len(individual_indexes)):
-            if individuals_fitness[individual_indexes[i]] > best_fitness:
-                best_fitness = individuals_fitness[individual_indexes[i]]
-                best_individual = individuals[individual_indexes[i]]
+        individual_array.sort(key=sortFitness, reverse=True)
 
-        return best_individual
+        for individual_entry in individual_array:
+            if random.random() < self.p:
+                return individual_entry[0]
+
+        return individual_array[-1][0]
