@@ -24,14 +24,11 @@ individuals = list()
 for i in range(individual_num):
     individuals.append(InputIndividualFactory.get_random_multi_input_ephemeral_key_individual(frames_to_test, 10, 0.2))
 
-#tester = LoveTester(aux_path=sys.argv[1], clean_script=sys.argv[2], skip_script=sys.argv[3])
-#tester = LoveHawkthornTester(aux_path=sys.argv[1], clean_script=sys.argv[2], skip_script=sys.argv[3], level="village-forest", x_pos=96, y_pos=23)
-#tester = LoveHawkthornTester(aux_path=sys.argv[1], clean_script=sys.argv[2], skip_script=sys.argv[3], level="village-forest-stonerspeak", x_pos=125, y_pos=33)
-#tester = LoveHawkthornTester(aux_path=sys.argv[1], clean_script=sys.argv[2], skip_script=sys.argv[3], level="village-forest-stonerspeak", x_pos=165, y_pos=30)
+# tester = LoveTester(aux_path=sys.argv[1], clean_script=sys.argv[2], skip_script=sys.argv[3])
 
 testers = list()
 for i in range(5):
-    testers.append(LoveHawkthornTester(aux_path=sys.argv[1] + str(i), clean_script=sys.argv[2], skip_script=sys.argv[3], level="village-forest", x_pos=96, y_pos=23))
+    testers.append(LoveTester(aux_path=sys.argv[1], clean_script=sys.argv[2], skip_script=sys.argv[3]))
 
 population = PopulationFactory.get_classic_parallel_population(individuals, testers, mutation_prob, elitism_ratio)
 
