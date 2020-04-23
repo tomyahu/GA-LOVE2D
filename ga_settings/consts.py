@@ -1,6 +1,6 @@
 import os
 
-love_path = "C:\Program Files\love_versions\love-0.10.0-win64\love.exe"
+love_path = ".\love_versions\love-0.10.0-win64\love.exe"
 
 absolute_path = os.getcwd()
 
@@ -11,6 +11,6 @@ elitism_ratio = 0.05
 
 frames_to_clean = 0
 frames_to_skip = 0
-frames_to_test = 200
+frames_to_test = 500
 
 frames_interval = 0
