@@ -1,6 +1,6 @@
 import os
 
-love_path = ".\love_versions\love-0.10.0-win64\love.exe"
+love_path = ".\love_versions\love-11.3-win64\love.exe"
 
 absolute_path = os.getcwd()
 
