@@ -21,7 +21,7 @@ In the game you want to run rename the `main.lua` file to `game_main.lua`.
 Then copy all of the game files to the `love_ga_wrapper` folder in this project.
 
 #### Step 3
-You're done, go to wiki for further instructions for running the genetic algorithm.
+You're done, go to [wiki](wiki) for further instructions for running the genetic algorithm.
 
 ## Features Planed
 
