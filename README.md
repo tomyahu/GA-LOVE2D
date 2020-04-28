@@ -4,6 +4,9 @@ Its a tool made to reproduce "Error Inducing Input Sequences" in videogames made
 It uses genetic algorithms to generate input sequences and evaluates them using the game's variables.
 The input sequences obtained by the genetic algorithm are saved in a folder alongside with the data of the genetic algorithm variables.
 
+## Dependencies
+* Python 3
+
 ## Install it
 This tool has only been tested for windows so only those instructions are included for now.
 
