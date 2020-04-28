@@ -1,8 +1,8 @@
 import os
 
-love_path = ".\love_versions\love-11.3-win64\love.exe"
-
 absolute_path = os.getcwd()
+
+love_path = absolute_path + "/ga_settings/love_versions/love-11.3-win64/love.exe"
 
 generations = 30
 individual_num = 100
