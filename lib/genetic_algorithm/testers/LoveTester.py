@@ -1,7 +1,8 @@
 import json
+import sys
 
 from ga_settings.consts import love_path, frames_to_clean, frames_to_test, frames_to_skip, frames_interval, \
-    absolute_path
+    absolute_path, crash_counter
 from lib.genetic_algorithm.testers.Tester import Tester
 from lib.input_scripts.InputScript import InputScript
 from lib.os_lib.cd import cd
@@ -13,10 +14,20 @@ class LoveTester(Tester):
     Tester class for testing individuals and get their fitness. Runs the game and returns the resulting fitness.
     """
 
-    def __init__(self, aux_path="out", clean_script="clean", skip_script="skip"):
+    def __init__(self, aux_path="out", clean_script="clean", skip_script="skip", error_fitness=-9999999):
+        """
+        :param aux_path: <str> the path of the temporary file to create and use on the game
+        :param clean_script: <str> the path of the script made to clean the game data before another test
+        :param skip_script: <str> the script that runs at the beginning of each test to skip unimportant parts of the
+                                    game like menues and tutorials
+        :param error_fitness: <num> the value of fitness of an individual that made the game crash for any reason
+                                    (these individuals are saved automatically in the same folder the best individuals
+                                     of each generation are saved)
+        """
         self.skip_script = skip_script
         self.clean_script = clean_script
         self.aux_path = aux_path
+        self.error_fitness = error_fitness
 
     def test(self, individual):
         """
@@ -42,13 +53,24 @@ class LoveTester(Tester):
                        str(frames_interval)], stdin=PIPE, stdout=PIPE, stderr=PIPE)
 
             try:
-                out, err = p.communicate()
+                out, err = p.communicate(timeout=100)
             except TimeoutExpired:
                 p.kill()
                 out, err = p.communicate()
+                err += b'//timeout'
 
             if err != b'':
-                raise RuntimeError("Game Crashed.\nError: " + err.decode())
+                crash_report_count = crash_counter.increase_count()
+                crash_individual_path = absolute_path + "/individuals/" + sys.argv[4] + "/crash_" + str(crash_report_count)
+
+                input_script.save_to_file(crash_individual_path)
+
+                file = open(crash_individual_path + "_data", "w")
+                file.write(err.decode())
+                file.close()
+
+                return self.error_fitness
+
 
             out = json.loads(out.decode())
 
