@@ -5,7 +5,7 @@ if mode == "run_tas" then
     require("love_ga_wrapper.run.run_tas")
 elseif mode == "run_game" then
 	for i, val in pairs(arg) do
-		if i > 1 then
+		if i > 2 then
 			arg[i-1] = arg[i]
 			arg[i] = nil
 		end

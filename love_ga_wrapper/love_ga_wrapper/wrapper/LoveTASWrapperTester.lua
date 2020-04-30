@@ -80,10 +80,11 @@ end
 -- runLoveCycle: None -> None
 -- runs love's cycle once
 function LoveTASWrapperTester.runLoveCycle(self)
-    local start = socket.gettime()*1000
-    self.update_function(self.last_update_dt)
-    self.draw_function(self.last_update_dt)
-    self.last_update_dt = socket.gettime()*1000 - start
+	local start = love.timer.getTime( )
+    self.update_function(self.setted_dt)
+    self.draw_function(self.setted_dt)
+    local delta = love.timer.getTime( ) - start
+    self.current_frame_dt = delta
 end
 
 -- redefineLoveUpdate: None -> None
