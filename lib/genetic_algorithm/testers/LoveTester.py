@@ -45,9 +45,10 @@ class LoveTester(Tester):
         input_script.save_to_file(absolute_path + "/individuals/" + self.aux_path)
 
         with cd(absolute_path + "/love_ga_wrapper"):
-            p = Popen([love_path, ".", "run_tas", self.clean_script, str(frames_to_clean), "0", str(frames_interval)],
-                      stdin=PIPE, stdout=PIPE, stderr=PIPE)
-            p.communicate()
+            if frames_to_clean > 0:
+                p = Popen([love_path, ".", "run_tas", self.clean_script, str(frames_to_clean), "0", str(frames_interval)],
+                          stdin=PIPE, stdout=PIPE, stderr=PIPE)
+                p.communicate()
 
             p = Popen([love_path, ".", "run_tas", self.aux_path, str(frames_to_test), str(frames_to_skip),
                        str(frames_interval)], stdin=PIPE, stdout=PIPE, stderr=PIPE)
@@ -70,7 +71,6 @@ class LoveTester(Tester):
                 file.close()
 
                 return self.error_fitness
-
 
             out = json.loads(out.decode())
 
