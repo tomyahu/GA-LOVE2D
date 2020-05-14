@@ -22,13 +22,13 @@ except FileExistsError:
 # Create population
 individuals = list()
 for i in range(individual_num):
-    individuals.append(InputIndividualFactory.get_random_multi_input_ephemeral_key_individual(frames_to_test, 10, 0.2))
+    individuals.append(InputIndividualFactory.get_random_multi_input_ephemeral_key_individual(frames_to_test, 4, 0.90))
 
 # tester = LoveTester(aux_path=sys.argv[1], clean_script=sys.argv[2], skip_script=sys.argv[3])
 
 testers = list()
-for i in range(5):
-    testers.append(LoveTester(aux_path=sys.argv[1], clean_script=sys.argv[2], skip_script=sys.argv[3]))
+for i in range(8):
+    testers.append(LoveTester(aux_path=sys.argv[1] + str(i), clean_script=sys.argv[2], skip_script=sys.argv[3]))
 
 population = PopulationFactory.get_classic_parallel_population(individuals, testers, mutation_prob, elitism_ratio)
 
