@@ -17,4 +17,5 @@ with cd("./love_ga_wrapper"):
         p.kill()
         out, err = p.communicate()
 
-print(out, err)
+print(out.decode())
+print(err.decode())
