@@ -39,7 +39,7 @@ end
 -- The main fitness function
 function D545_1_FitnessFun.mainFun(self)
     local dash_attack_points = self.dash_attacks / 8
-    local special_dash_points = self.triggered_special_dash + self.landed_special_dash*10*(1 + (self.special_dash_shout - self.landed_special_dash) * 9)
+    local special_dash_points = self.triggered_special_dash + self.special_dash_shout*10*(1 + (self.special_dash_shout - self.landed_special_dash) * 9)
 
     return dash_attack_points + special_dash_points
 end
