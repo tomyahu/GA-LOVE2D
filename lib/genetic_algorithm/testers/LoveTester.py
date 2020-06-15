@@ -14,12 +14,14 @@ class LoveTester(Tester):
     Tester class for testing individuals and get their fitness. Runs the game and returns the resulting fitness.
     """
 
-    def __init__(self, aux_path="out", clean_script="clean", skip_script="skip", error_fitness=-9999999):
+    def __init__(self, aux_path="out", clean_script="clean", skip_script="skip", extra_frames=0, error_fitness=-9999999):
         """
         :param aux_path: <str> the path of the temporary file to create and use on the game
         :param clean_script: <str> the path of the script made to clean the game data before another test
         :param skip_script: <str> the script that runs at the beginning of each test to skip unimportant parts of the
                                     game like menues and tutorials
+        :param extra_frames: <num> the amount of frames to keep running the tester after the amount of frames to test
+                                    is over
         :param error_fitness: <num> the value of fitness of an individual that made the game crash for any reason
                                     (these individuals are saved automatically in the same folder the best individuals
                                      of each generation are saved)
@@ -27,6 +29,7 @@ class LoveTester(Tester):
         self.skip_script = skip_script
         self.clean_script = clean_script
         self.aux_path = aux_path
+        self.extra_frames = extra_frames
         self.error_fitness = error_fitness
 
     def test(self, individual):
@@ -50,7 +53,7 @@ class LoveTester(Tester):
                           stdin=PIPE, stdout=PIPE, stderr=PIPE)
                 p.communicate()
 
-            p = Popen([love_path, ".", "run_tas", self.aux_path, str(frames_to_test), str(frames_to_skip),
+            p = Popen([love_path, ".", "run_tas", self.aux_path, str(frames_to_test + self.extra_frames), str(frames_to_skip),
                        str(frames_interval)], stdin=PIPE, stdout=PIPE, stderr=PIPE)
 
             try:
