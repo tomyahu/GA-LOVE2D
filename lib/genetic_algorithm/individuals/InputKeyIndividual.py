@@ -4,14 +4,14 @@ from lib.input_scripts.InputScript import InputScript
 
 class InputKeyIndividual(InputIndividual):
     """
-    An individual for the genetic algorithm, it represents an input script. Its composed by only single key genomes
+    An individual for the genetic algorithm, it represents an input script. Its composed by only single key genes
     """
 
-    def __init__(self, genomes):
+    def __init__(self, genes):
         """
-        :param genomes: <list(SingleKeyGenome)> The list of genomes of the current individual
+        :param genes: <list(SingleKeyGene)> The list of genes of the current individual
         """
-        InputIndividual.__init__(self, genomes)
+        InputIndividual.__init__(self, genes)
 
     def get_inputs(self):
         """
@@ -20,8 +20,8 @@ class InputKeyIndividual(InputIndividual):
         """
         inputs = InputScript()
 
-        for i in range(len(self.genomes)):
-            genome_input = self.genomes[i].get_key_input()
-            inputs.add_input(genome_input, i+1, i+2)
+        for i in range(len(self.genes)):
+            gene_input = self.genes[i].get_key_input()
+            inputs.add_input(gene_input, i+1, i+2)
 
         return inputs

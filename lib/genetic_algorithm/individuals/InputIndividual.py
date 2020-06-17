@@ -6,94 +6,94 @@ class InputIndividual:
     An individual for the genetic algorithm, it represents an input script
     """
 
-    def __init__(self, genomes):
+    def __init__(self, genes):
         """
-        :param genomes: <list(SingleKeyGenome)> The list of genomes of the current individual
+        :param genes: <list(SingleKeyGene)> The list of genes of the current individual
         """
-        self.genomes = genomes
+        self.genes = genes
         self.metrics = dict()
 
     def single_point_cross_over(self, individual):
         """
-        Returns the result of a classic crossover between this individual and the passed individual divides the genomes
+        Returns the result of a classic crossover between this individual and the passed individual divides the genes
         of both individuals in 2 and creates a new individual with the first part of the first and the second of the
         second
         :param individual: <InputIndividual> the individual to do crossover with
         :return: <InputIndividual> a new individual that corresponds to the crossover of this individual and the
                                     individual passed
         """
-        new_genomes = list()
-        genome_number = len(self.get_genomes())
+        new_genes = list()
+        gene_number = len(self.get_genes())
 
-        random_cut = random.randint(0, genome_number - 1)
+        random_cut = random.randint(0, gene_number - 1)
 
         for i in range(0, random_cut):
-            new_genomes.append(self.genomes[i].get_copy())
+            new_genes.append(self.genes[i].get_copy())
 
-        for i in range(random_cut , genome_number):
-            new_genomes.append(individual.get_genomes()[i].get_copy())
+        for i in range(random_cut , gene_number):
+            new_genes.append(individual.get_genes()[i].get_copy())
 
-        return self.__class__(new_genomes)
+        return self.__class__(new_genes)
 
     def k_point_cross_over(self, individual, k):
         """
-        A generalization of the single point crossover, it generatess k random cuts in the individual's genomes and
-        intercalates the genomes of both individuals to create a new individual
+        A generalization of the single point crossover, it generatess k random cuts in the individual's genes and
+        intercalates the genos of both individuals to create a new individual
         :param individual: <InputIndividual> the individual to do crossover with
         :param k: <int> the number of cuts of the k-point crossovef
         :return: <InputIndividual> a new individual that corresponds to the crossover of this individual and the
                                     individual passed
         """
-        new_genomes = list()
-        genome_number = len(self.genomes)
+        new_genes = list()
+        gene_number = len(self.genes)
 
         random_cuts = [0]
 
         for i in range(1, k):
-            random_cuts.append(random.randint(1, genome_number))
+            random_cuts.append(random.randint(1, gene_number))
 
         random_cuts.sort()
-        random_cuts.append(genome_number)
+        random_cuts.append(gene_number)
 
-        genomes_1 = self.genomes
-        genomes_2 = individual.get_genomes()
+        genes_1 = self.genes
+        genes_2 = individual.get_genes()
 
         for j in range(len(random_cuts) - 1):
             random_cut_1 = random_cuts[j]
             random_cut_2 = random_cuts[j + 1]
 
             for i in range(random_cut_1, random_cut_2):
-                new_genomes[i] = genomes_1[i].get_copy()
+                new_genes[i] = genes_1[i].get_copy()
 
-                aux = genomes_1
-                genomes_1 = genomes_2
-                genomes_2 = aux
+                aux = genes_1
+                genes_1 = genes_2
+                genes_2 = aux
 
-        return self.__class__(new_genomes)
+        return self.__class__(new_genes)
 
     def uniform_cross_over(self, individual):
         """
-        Returns a list of genomes that correspond to a mix of the genomes of both individuals in the corresponding positions
+        Returns a list of genes that correspond to a mix of the genes of both individuals in the corresponding positions
         :param individual: <InputIndividual> the individual to do crossover with
         :return: <InputIndividual> a new individual that corresponds to the crossover of this individual and the
                                     individual passed
         """
-        new_genomes = list()
+        new_genes = list()
 
-        for i in range(min(len(self.genomes), len(individual.get_genomes()))):
+        for i in range(min(len(self.genes), len(individual.get_genes()))):
             if random.random() < 0.5:
-                new_genomes.append(self.genomes[i].get_copy())
+                new_genes.append(self.genes[i].get_copy())
             else:
-                new_genomes.append(individual.get_genomes()[i].get_copy())
+                new_genes.append(individual.get_genes()[i].get_copy())
 
-        return self.__class__(new_genomes)
+        return self.__class__(new_genes)
 
     def mutate(self):
         """
         Mutates a random gene of the individual
         """
-        random_genome = random.choice(self.genomes)
-        random_genome.mutate()
+        random_gene = random.choice(self.genes)
+        random_gene.mutate()
 
     def get_inputs(self):
         """
@@ -126,8 +126,8 @@ class InputIndividual:
         """
         return self.metrics
 
-    def get_genomes(self):
+    def get_genes(self):
         """
         getter
         """
-        return self.genomes
+        return self.genes
