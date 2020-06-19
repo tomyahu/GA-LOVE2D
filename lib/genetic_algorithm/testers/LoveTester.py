@@ -19,7 +19,7 @@ class LoveTester(Tester):
         :param aux_path: <str> the path of the temporary file to create and use on the game
         :param clean_script: <str> the path of the script made to clean the game data before another test
         :param skip_script: <str> the script that runs at the beginning of each test to skip unimportant parts of the
-                                    game like menues and tutorials
+                                    game like menus and tutorials
         :param extra_frames: <num> the amount of frames to keep running the tester after the amount of frames to test
                                     is over
         :param error_fitness: <num> the value of fitness of an individual that made the game crash for any reason
