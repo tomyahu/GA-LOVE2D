@@ -1,9 +1,9 @@
 ---------------------------------------------------------------------------------------------
 local LoveTASWrapper = require("love_ga_wrapper.wrapper.LoveTASWrapperTesterSkip")
-local FitnessFun = require("love_ga_wrapper.fitness_functions.AttackFromAboveFitnessFun")
+local FitnessFun = require("love_ga_wrapper.fitness_functions.D545_2_2_FitnessFun")
 
 local setted_seed = 1
-local setted_dt = 1/12
+local setted_dt = 1/60
 local input_script_path = "../individuals/" .. arg[3]
 local frames_to_test = tonumber(arg[4])
 local frames_to_skip = tonumber(arg[5])

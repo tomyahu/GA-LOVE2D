@@ -2,9 +2,9 @@ from ga_settings.word_list import word_list
 from random import random, choice
 
 
-class SingleKeyGenome():
+class SingleKeyGene():
     """
-    A single input key genome, represents a key press for one frame
+    A single input key gene, represents a key press for one frame
     """
 
     def __init__(self, key_input):
@@ -13,31 +13,31 @@ class SingleKeyGenome():
         """
         self.key_input = key_input
 
-    def cross_over(self, genome):
+    def cross_over(self, gene):
         """
-        Returns a new Single Key Genome with one of the inputs
-        :param genome: <SingleKeyGenome>
-        :return: <SingleKeyGenome> a new Single Key Genome with one of the inputs
+        Returns a new Single Key Gene with one of the inputs
+        :param gene: <SingleKeyGene>
+        :return: <SingleKeyGene> a new Single Key Gene with one of the inputs
         """
         new_input = self.key_input
 
         if random() < 0.5:
-            new_input = genome.get_key_input()
+            new_input = gene.get_key_input()
 
-        return SingleKeyGenome(new_input)
+        return SingleKeyGene(new_input)
 
     def mutate(self):
         """
-        Mutates the current genome
+        Mutates the current gene
         """
         self.key_input = choice(word_list)
 
     def get_copy(self):
         """
-        Returns a copy of the current genome
-        :return: <SingleKeyGenome> a copy of the current genome
+        Returns a copy of the current gene
+        :return: <SingleKeyGene> a copy of the current gene
         """
-        return SingleKeyGenome(self.key_input)
+        return SingleKeyGene(self.key_input)
 
     @staticmethod
     def get_frames():

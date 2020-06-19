@@ -1,7 +1,6 @@
 word_list = [
-    "space",
+    "x",
     "up",
     "down",
-    "left",
     "right"
 ]

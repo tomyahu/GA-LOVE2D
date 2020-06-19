@@ -82,4 +82,15 @@ function LoveTASWrapper.redefineLoveUpdate(self)
     end
 end
 
+function LoveTASWrapper.redefineLoveTimer(self)
+    love.timer.getFPS = function() return 60 end
+    love.timer.getTime = function()
+        return self:getCurrentFrame() * self.setted_dt
+    end
+
+    love.timer.getDelta = function()
+        return self.setted_dt
+    end
+end
+
 return LoveTASWrapper
