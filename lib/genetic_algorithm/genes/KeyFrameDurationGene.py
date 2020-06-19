@@ -1,12 +1,12 @@
 import random
 
 from lib.input_scripts.InputScript import InputScript
-from lib.genetic_algorithm.genomes.KeyFrameGenome import KeyFrameGenome
+from lib.genetic_algorithm.genes.KeyFrameGene import KeyFrameGene
 
 
-class KeyFrameDurationGenome(KeyFrameGenome):
+class KeyFrameDurationGene(KeyFrameGene):
     """
-    A genome that stores a certain key that was pressed in a certain frame for a number of frames
+    A gene that stores a certain key that was pressed in a certain frame for a number of frames
     """
 
     def __init__(self, key_input, frame, frame_duration):
@@ -15,13 +15,13 @@ class KeyFrameDurationGenome(KeyFrameGenome):
         :param frame: <int> the frame when the input is pressed
         :param frame_duration: <int> the amount of frames the input stays pressed
         """
-        KeyFrameGenome.__init__(self, key_input, frame)
+        KeyFrameGene.__init__(self, key_input, frame)
         self.frame_duration = frame_duration
 
     def mutate_with_max_frame(self, max_frame):
         """
         Mutates the frame and duration of the individual and changes it to a random space between 1 and the max frame
-        :param max_frame: <int> the maximum frame that the genome can work on
+        :param max_frame: <int> the maximum frame that the gene can work on
         """
         random_frame_1 = random.randint(1,max_frame)
         random_frame_2 = random.randint(1,max_frame)
@@ -34,8 +34,8 @@ class KeyFrameDurationGenome(KeyFrameGenome):
 
     def get_inputs(self):
         """
-        Returns an input script with the data that this genome represents
-        :return: <InputScript> the input script that corresponds to this genome
+        Returns an input script with the data that this gene represents
+        :return: <InputScript> the input script that corresponds to this gene
         """
         input_script = InputScript()
         input_script.add_input(self.key_input, self.frame, self.frame + self.frame_duration)
@@ -43,10 +43,10 @@ class KeyFrameDurationGenome(KeyFrameGenome):
 
     def get_copy(self):
         """
-        Returns a copy of the current genome
-        :return: <KeyFrameDurationGenome> a copy of the current genome
+        Returns a copy of the current gene
+        :return: <KeyFrameDurationGene> a copy of the current gene
         """
-        return KeyFrameDurationGenome(self.key_input, self.frame, self.frame_duration)
+        return KeyFrameDurationGene(self.key_input, self.frame, self.frame_duration)
 
     def get_duration(self):
         """

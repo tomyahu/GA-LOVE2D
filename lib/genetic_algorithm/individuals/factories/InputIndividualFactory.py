@@ -1,8 +1,8 @@
 import math
 
 from ga_settings.word_list import word_list
-from lib.genetic_algorithm.genomes.EphemeralKeyGenome import EphemeralKeyGenome
-from lib.genetic_algorithm.genomes.factories.InputGenomeFactory import InputGenomeFactory
+from lib.genetic_algorithm.genes.EphemeralKeyGene import EphemeralKeyGene
+from lib.genetic_algorithm.genes.factories.InputGeneFactory import InputGeneFactory
 from lib.genetic_algorithm.individuals.InputKeyIndividual import InputKeyIndividual
 from lib.genetic_algorithm.individuals.InputKeyFrameIndividual import InputKeyFrameIndividual
 from lib.genetic_algorithm.individuals.InputKeyFrameDurationIndividual import InputKeyFrameDurationIndividual
@@ -18,48 +18,48 @@ class InputIndividualFactory:
     @staticmethod
     def get_random_input_single_key_individual(size):
         """
-        creates a new input key individual with a number of random genomes equal to size (number of frames to test)
+        creates a new input key individual with a number of random genes equal to size (number of frames to test)
         :param size: <int> the amount of genes the individual has
         :return: <InputKeyIndividual> the new random input key individual
         """
-        genomes = list()
+        genes = list()
         for i in range(size):
-            random_genome = InputGenomeFactory.get_random_single_key_genome()
-            genomes.append(random_genome)
+            random_gene = InputGeneFactory.get_random_single_key_gene()
+            genes.append(random_gene)
 
-        return InputKeyIndividual(genomes)
+        return InputKeyIndividual(genes)
 
     @staticmethod
     def get_random_key_frame_individual(size, max_frame):
         """
-        creates a new key frame individual with a number of random genomes equal to size and a max frame of max_frame
+        creates a new key frame individual with a number of random genes equal to size and a max frame of max_frame
         :param size: <int> the amount of genes the individual as
         :param max_frame: <int> the maximum frame
         :return: <InputKeyFrameIndividual> the new random input key frame individual
         """
-        genomes = list()
+        genes = list()
         for i in range(size):
-            random_genome = InputGenomeFactory.get_random_key_frame_genome(max_frame)
-            genomes.append(random_genome)
+            random_gene = InputGeneFactory.get_random_key_frame_gene(max_frame)
+            genes.append(random_gene)
 
-        return InputKeyFrameIndividual(genomes)
+        return InputKeyFrameIndividual(genes)
 
     @staticmethod
     def get_random_key_frame_duration_individual(size, max_frame, max_duration):
         """
-        creates a new key frame duration individual with a number of random genomes equal to size, a max initial frame
+        creates a new key frame duration individual with a number of random genes equal to size, a max initial frame
         of max_frame and a max frame duration of max_duration.
         :param size: <int> the amount of genes the individual as
         :param max_frame: <int> the maximum frame
         :param max_duration: <int> the maximum duration of each gene
         :return: <InputKeyFrameDurationIndividual> the new random input key frame duration individual
         """
-        genomes = list()
+        genes = list()
         for i in range(size):
-            random_genome = InputGenomeFactory.get_random_key_frame_duration_genome(max_frame, max_duration)
-            genomes.append(random_genome)
+            random_gene = InputGeneFactory.get_random_key_frame_duration_gene(max_frame, max_duration)
+            genes.append(random_gene)
 
-        return InputKeyFrameDurationIndividual(genomes)
+        return InputKeyFrameDurationIndividual(genes)
 
     @staticmethod
     def get_random_ephemeral_key_individual(size, max_frames):
@@ -70,17 +70,17 @@ class InputIndividualFactory:
         :param max_frames: <int> the maximum frame
         :return: <EphemeralKeyIndividual> the new random ephemeral key individual
         """
-        genomes = list()
+        genes = list()
         for i in range(size):
-            random_genome = InputGenomeFactory.get_random_ephemeral_key_genome(max_frames)
-            genomes.append(random_genome)
+            random_gene = InputGeneFactory.get_random_ephemeral_key_gene(max_frames)
+            genes.append(random_gene)
 
-        return EphemeralKeyIndividual(genomes)
+        return EphemeralKeyIndividual(genes)
 
     @staticmethod
     def get_random_ephemeral_individual_with_frames_to_test(size, frames_to_test):
         """
-        Creates a new ephemeral key individual with a number of random genomes equal to size. This method in particular
+        Creates a new ephemeral key individual with a number of random genes equal to size. This method in particular
         tweaks the maximum number of frames a gene can last acording to the frames to test, so the expected value of
         frames the individual created used is equeal to the frames to test.
         :param size: <int> the amount of genes the individual has
@@ -98,26 +98,26 @@ class InputIndividualFactory:
         :param input_no_input_ratio: <float> the ratio of time an input will be pressed to when its not pressed
         :return: <MultiInputEphemeralKeyIndividual> the new random multi input ephemeral key individual
         """
-        genomes = list()
+        genes = list()
 
         for word in word_list:
             current_frame = 1
 
             aux_bool = True
             while current_frame < frames_to_test:
-                max_genome_duration = int((frames_to_test / avg_inputs) / (1 + input_no_input_ratio))
+                max_gene_duration = int((frames_to_test / avg_inputs) / (1 + input_no_input_ratio))
                 if aux_bool:
                     aux_bool = False
                 else:
-                    max_genome_duration = int(max_genome_duration * input_no_input_ratio)
+                    max_gene_duration = int(max_gene_duration * input_no_input_ratio)
                     aux_bool = True
 
-                new_genome = InputGenomeFactory.get_random_duration_ephemeral_key_genomes(word, max_genome_duration)
+                new_gene = InputGeneFactory.get_random_duration_ephemeral_key_genes(word, max_gene_duration)
 
-                current_frame += new_genome.get_frames()
+                current_frame += new_gene.get_frames()
                 if current_frame < frames_to_test:
-                    genomes.append(new_genome)
+                    genes.append(new_gene)
                 else:
-                    genomes.append(EphemeralKeyGenome(word, frames_to_test - (current_frame - new_genome.get_frames())))
+                    genes.append(EphemeralKeyGene(word, frames_to_test - (current_frame - new_gene.get_frames())))
 
-        return MultiInputEphemeralKeyIndividual(genomes)
+        return MultiInputEphemeralKeyIndividual(genes)

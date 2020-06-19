@@ -24,17 +24,15 @@ end)
 -- init: None -> None
 -- Initializes the wrapper, redefines the love functions
 function LoveWrapper.init(self)
-    self.key_press_function = love.keypressed
-    self.key_release_function = love.keyreleased
     self.old_load = love.load
     self.old_update = love.update
     self.old_draw = love.draw
     self.old_is_down = love.keyboard.isDown
 
-    love.keypressed = function(key) end
-    love.keyreleased = function(key) end
-
     self:redefineLoveFunctions()
+
+    math.randomseed(self.random_seed)
+    love.math.random = math.random
 end
 
 -- redefineLoveFunctions: None -> None
@@ -44,6 +42,7 @@ function LoveWrapper.redefineLoveFunctions(self)
     self:redefineLoveUpdate()
     self:redefineLoveLoad()
     self:redefineLoveDraw()
+    self:redefineLoveTimer()
 end
 
 -- resetGame: None -> None
@@ -57,6 +56,7 @@ end
 -- resets the random seed
 function LoveWrapper.resetGameAux(self)
     math.randomseed(self.random_seed)
+    love.math.setRandomSeed( self.random_seed )
 end
 
 -- resetInputs: None -> None
@@ -70,9 +70,7 @@ end
 function LoveWrapper.pressKey(self, key)
     self.keys_pressed[key] = true
     self:redefineLoveIsDown()
-    if not (self.key_press_function == nil) then
-        self.key_press_function(key)
-    end
+    love.keypressed(key)
 end
 
 -- releaseKey: str -> None
@@ -80,9 +78,7 @@ end
 function LoveWrapper.releaseKey(self, key)
     self.keys_pressed[key] = nil
     self:redefineLoveIsDown()
-    if not (self.key_release_function == nil) then
-        self.key_release_function(key)
-    end
+    love.keyreleased(key)
 end
 
 -- redefineLoveIsDown(self): None -> None
@@ -94,6 +90,16 @@ function LoveWrapper.redefineLoveIsDown(self)
         else
             return true
         end
+    end
+
+    love.keyboard.isScancodeDown = function(...)
+        local arg = {...}
+        for i,v in ipairs(arg) do
+            if love.keyboard.isDown(v) then
+                return true
+            end
+        end
+        return false
     end
 end
 
@@ -177,6 +183,10 @@ end
 -- sets a reference in the wrapper's game reference dict and assign's it to a key
 function LoveWrapper.setInGameReferenceDict(self, key, reference)
     self.game_reference_dict[key] = reference
+end
+
+function LoveWrapper.redefineLoveTimer(self)
+    love.timer.getFPS = function() return 60 end
 end
 
 -- setters

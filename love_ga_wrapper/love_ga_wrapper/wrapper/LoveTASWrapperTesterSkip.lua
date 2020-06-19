@@ -30,6 +30,8 @@ function LoveTASWrapperTesterSkip.init(self)
     LoveTASWrapper.init(self)
 
     self.m_thread = coroutine.create(function()
+        function print() end
+
         self.load_function(arg)
         for i = 1, self.frames_to_skip do
             if self.frames_yield_interval > 0 then
