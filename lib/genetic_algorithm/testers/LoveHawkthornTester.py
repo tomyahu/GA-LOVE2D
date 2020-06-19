@@ -6,18 +6,24 @@ from lib.genetic_algorithm.testers.LoveTester import LoveTester
 from lib.os_lib.cd import cd
 
 
+### DEPRECATED ###
 class LoveHawkthornTester(LoveTester):
     """
-    Tester class for testing individuals and get their fitness. Runs hawkthorn and sets a level and position.
+    Tester class for testing individuals and get their fitness.
+    This tester was created exclusively to run 'Journey to the Center of Hawkthorn' and takes advantage of the debug
+    tools the game posseses.
+    It sets a level and position for the character to spawn.
     """
+
     def __init__(self, aux_path="out", clean_script="clean", skip_script="skip", x_pos=0, y_pos=0, level=""):
         """
-        :param aux_path:
-        :param clean_script:
-        :param skip_script:
-        :param x_pos:
-        :param y_pos:
-        :param level:
+        :param aux_path: <str> the path of the temporary file to create and use on the game
+        :param clean_script: <str> the path of the script made to clean the game data before another test
+        :param skip_script: <str> the script that runs at the beginning of each test to skip unimportant parts of the
+                                    game like menus and tutorials
+        :param x_pos: <int> the in-game x position for the player character to be
+        :param y_pos: <int> the in-game y position for the player character to be
+        :param level: <str> the internal name of the level
         """
         LoveTester.__init__(self, aux_path=aux_path, clean_script=clean_script, skip_script=skip_script)
         self.x_pos = x_pos
