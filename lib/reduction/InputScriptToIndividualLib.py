@@ -1,11 +1,24 @@
 from lib.genetic_algorithm.genes.KeyFrameDurationGene import KeyFrameDurationGene
 from lib.genetic_algorithm.individuals.InputKeyFrameDurationIndividual import InputKeyFrameDurationIndividual
+from lib.genetic_algorithm.individuals.ReductionKeyFrameDurationIndividual import ReductionKeyFrameDurationIndividual
 
 
 class InputScriptToIndividualLib:
     """
     Library class to transform input sequences to genetic algorithm individuals
     """
+
+    @staticmethod
+    def to_reduction_key_frame_duration_individual(input_script):
+        """
+        Transform an input sequence into a KeyFrameDurationIndividual object
+        :param input_script: <InputScript> an input sequence object
+        :return: <ReductionKeyFrameDurationIndividual> a genetic algorithm individual that represents the input sequence
+                                                    given
+        """
+        return ReductionKeyFrameDurationIndividual(
+            InputScriptToIndividualLib.to_key_frame_duration_individual_aux(input_script)
+        )
 
     @staticmethod
     def to_key_frame_duration_individual(input_script):
