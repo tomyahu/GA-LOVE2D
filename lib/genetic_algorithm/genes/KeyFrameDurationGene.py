@@ -48,12 +48,6 @@ class KeyFrameDurationGene(KeyFrameGene):
         """
         return KeyFrameDurationGene(self.key_input, self.frame, self.frame_duration)
 
-    def get_duration(self):
-        """
-        getter
-        """
-        return self.frame_duration
-
     def get_frames(self):
         """
         getter
