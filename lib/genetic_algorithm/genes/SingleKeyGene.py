@@ -39,8 +39,7 @@ class SingleKeyGene():
         """
         return SingleKeyGene(self.key_input)
 
-    @staticmethod
-    def get_frames():
+    def get_frames(self):
         """
         getter
         """
