@@ -13,19 +13,6 @@ class SingleKeyGene():
         """
         self.key_input = key_input
 
-    def cross_over(self, gene):
-        """
-        Returns a new Single Key Gene with one of the inputs
-        :param gene: <SingleKeyGene>
-        :return: <SingleKeyGene> a new Single Key Gene with one of the inputs
-        """
-        new_input = self.key_input
-
-        if random() < 0.5:
-            new_input = gene.get_key_input()
-
-        return SingleKeyGene(new_input)
-
     def mutate(self):
         """
         Mutates the current gene

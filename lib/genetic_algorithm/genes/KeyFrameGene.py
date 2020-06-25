@@ -16,24 +16,6 @@ class KeyFrameGene(SingleKeyGene):
         SingleKeyGene.__init__(self, key_input)
         self.frame = frame
 
-    def cross_over(self, gene):
-        """
-        Returns a new gene that may have the input and frame from any of the genes passed
-        :param gene: <KeyFrameGene> a gene that represents an input and a frame
-        :return: <KeyFrameGene> a new gene that may have the input and frame from any of the genes passed
-        """
-        new_input = self.key_input
-
-        if random() < 0.5:
-            new_input = gene.get_key_input()
-
-        new_frame = self.frame
-
-        if random() < 0.5:
-            new_frame = gene.get_frame()
-
-        return KeyFrameGene(new_input, new_frame)
-
     def mutate_with_max_frame(self, max_frame):
         """
         Mutates the frame of the individual and changes it to a random frame from 1 to the max frame
