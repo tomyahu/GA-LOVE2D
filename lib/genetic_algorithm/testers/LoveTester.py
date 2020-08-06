@@ -14,7 +14,7 @@ class LoveTester(Tester):
     Tester class for testing individuals and get their fitness. Runs the game and returns the resulting fitness.
     """
 
-    def __init__(self, aux_path="out", clean_script="clean", skip_script="skip", extra_frames=0, error_fitness=-9999999):
+    def __init__(self, aux_path="out", clean_script="clean", skip_script="skip", extra_frames=0, error_fitness=-9999999, test_timeout=10):
         """
         :param aux_path: <str> the path of the temporary file to create and use on the game
         :param clean_script: <str> the path of the script made to clean the game data before another test
@@ -25,12 +25,14 @@ class LoveTester(Tester):
         :param error_fitness: <num> the value of fitness of an individual that made the game crash for any reason
                                     (these individuals are saved automatically in the same folder the best individuals
                                      of each generation are saved)
+        :param test_timeout: <num> the amount of seconds before it is considered the game crashes
         """
         self.skip_script = skip_script
         self.clean_script = clean_script
         self.aux_path = aux_path
         self.extra_frames = extra_frames
         self.error_fitness = error_fitness
+        self.test_timeout = test_timeout
 
     def test(self, individual):
         """
@@ -57,7 +59,7 @@ class LoveTester(Tester):
                        str(frames_interval)], stdin=PIPE, stdout=PIPE, stderr=PIPE)
 
             try:
-                out, err = p.communicate(timeout=100)
+                out, err = p.communicate(timeout=self.test_timeout)
             except TimeoutExpired:
                 p.kill()
                 out, err = p.communicate()
@@ -74,6 +76,7 @@ class LoveTester(Tester):
                 file.close()
 
                 return self.error_fitness
+
 
             out = json.loads(out.decode())
 

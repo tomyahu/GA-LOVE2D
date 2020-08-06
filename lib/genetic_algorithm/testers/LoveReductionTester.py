@@ -13,7 +13,7 @@ class LoveReductionTester(LoveTester):
     individuals.
     """
 
-    def __init__(self, target_input_sequence, aux_path="out", clean_script="clean", extra_frames=0):
+    def __init__(self, target_input_sequence, aux_path="out", clean_script="clean", extra_frames=0, test_timeout=10):
         """
         :param target_input_sequence: <InputScript> the input sequence to perform reduction on
         :param aux_path: <str> the path of the temporary file to create and use on the game
@@ -22,13 +22,15 @@ class LoveReductionTester(LoveTester):
                                     game like menus and tutorials
         :param extra_frames: <num> the amount of frames to keep running the tester after the amount of frames to test
                                     is over
+        :param test_timeout: <num> the amount of seconds before it is considered the game crashes
         """
         LoveTester.__init__(
             self,
             aux_path=aux_path,
             clean_script=clean_script,
             extra_frames=extra_frames,
-            error_fitness=0.0
+            error_fitness=0.0,
+            test_timeout = test_timeout
         )
 
     def test(self, individual):
@@ -50,7 +52,7 @@ class LoveReductionTester(LoveTester):
                        str(frames_interval)], stdin=PIPE, stdout=PIPE, stderr=PIPE)
 
             try:
-                out, err = p.communicate(timeout=100)
+                out, err = p.communicate(timeout=self.test_timeout)
             except TimeoutExpired:
                 p.kill()
                 out, err = p.communicate()
