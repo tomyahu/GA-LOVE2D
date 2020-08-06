@@ -13,7 +13,7 @@ class LoveReductionTester(LoveTester):
     individuals.
     """
 
-    def __init__(self, target_input_sequence, aux_path="out", clean_script="clean", extra_frames=0, test_timeout=10):
+    def __init__(self, target_input_sequence, aux_path="out", clean_script="clean", extra_frames=0, test_timeout=60):
         """
         :param target_input_sequence: <InputScript> the input sequence to perform reduction on
         :param aux_path: <str> the path of the temporary file to create and use on the game

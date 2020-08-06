@@ -14,7 +14,7 @@ class LoveTester(Tester):
     Tester class for testing individuals and get their fitness. Runs the game and returns the resulting fitness.
     """
 
-    def __init__(self, aux_path="out", clean_script="clean", skip_script="skip", extra_frames=0, error_fitness=-9999999, test_timeout=10):
+    def __init__(self, aux_path="out", clean_script="clean", skip_script="skip", extra_frames=0, error_fitness=-9999999, test_timeout=60):
         """
         :param aux_path: <str> the path of the temporary file to create and use on the game
         :param clean_script: <str> the path of the script made to clean the game data before another test
